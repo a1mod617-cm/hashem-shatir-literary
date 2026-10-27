@@ -10,6 +10,7 @@ import "./motion.css";
 import "./shelf.css";
 import "./admin.css";
 import "./refinement.css";
+import "./reader.css";
 export const metadata: Metadata = {
   title: { default: "هاشم خالد شطير | الموقع الأدبي", template: "%s | هاشم خالد شطير" },
   description: "الموقع الأدبي للكاتب والروائي اليمني هاشم خالد شطير. اقرأ رواياته وكتبه، واكتشف اقتباساته وعالمه الأدبي.",

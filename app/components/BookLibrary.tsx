@@ -69,15 +69,14 @@ function BookCard({book,index,onPreview}:{book:Book;index:number;onPreview:(book
   }
   return <article className="book-card" onPointerMove={tilt} onPointerLeave={reset}>
     <div className="book-image">
-      <Link href={`/books/${book.slug}`} className="book-cover-link" aria-label={`تفاصيل ${book.title}`}>
+      <Link href={`/read/${book.slug}`} className="book-cover-link" aria-label={`افتح كتاب ${book.title} للقراءة مباشرة`}>
         <Book3D cover={book.cover} title={book.title} accent={book.color} variant="card" />
         <span className="book-category">{book.genre}</span>
-        <span className="book-hover"><BookOpen size={24}/> ادخل عالم الكتاب <ArrowLeft size={16}/></span>
+        <span className="book-hover"><BookOpen size={24}/> افتح الكتاب واقرأ <ArrowLeft size={16}/></span>
       </Link>
-      <button type="button" className="book-quick-btn" onClick={()=>onPreview(book)}><Eye size={16}/> نظرة سريعة</button>
       <div className="book-reflection" aria-hidden="true"/>
     </div>
-    <div className="book-info"><span className="book-index">{String(index+1).padStart(2,"0")} / {book.year}</span><h3><Link href={`/books/${book.slug}`}>{book.title}</Link></h3><p>{book.subtitle || book.type}</p><Link href={`/read/${book.slug}`} className="book-read-direct"><BookOpen size={16}/> اقرأ الكتاب الآن <ArrowLeft size={14}/></Link><button type="button" className="book-arrow" aria-label={`معاينة ${book.title}`} onClick={()=>onPreview(book)}><ArrowLeft size={19}/></button></div>
+    <div className="book-info"><span className="book-index">{String(index+1).padStart(2,"0")} / {book.year}</span><h3><Link href={`/read/${book.slug}`}>{book.title}</Link></h3><p>{book.subtitle || book.type}</p><Link href={`/read/${book.slug}`} className="book-read-direct"><BookOpen size={16}/> افتح الكتاب للقراءة <ArrowLeft size={14}/></Link><button type="button" className="book-arrow" aria-label={`نبذة عن ${book.title}`} title="نبذة وتفاصيل" onClick={()=>onPreview(book)}><Eye size={18}/></button></div>
   </article>;
 }
 

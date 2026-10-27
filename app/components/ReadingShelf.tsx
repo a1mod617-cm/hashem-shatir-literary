@@ -85,7 +85,7 @@ export default function ReadingShelf() {
       const state = progress[book.slug] ?? { page:1, completed:false, recent:0 };
       const percentage = state.completed ? 100 : Math.round(Math.max(0, state.page - 1) / book.pages * 100);
       return <article key={book.slug} className="shelf-book">
-        <Link className="shelf-cover" href={`/books/${book.slug}`}><Book3D cover={book.cover} title={book.title} accent={book.color} variant="shelf" /></Link>
+        <Link className="shelf-cover" href={`/read/${book.slug}`} aria-label={`افتح كتاب ${book.title} مباشرة`}><Book3D cover={book.cover} title={book.title} accent={book.color} variant="shelf" /></Link>
         <div className="shelf-book-content"><span className="eyebrow">{book.genre} · {book.year}</span><h2>{book.title}</h2>{book.subtitle && <p className="shelf-subtitle">{book.subtitle}</p>}
           <div className="shelf-progress-label"><span>{state.completed ? "أحسنت، أنهيت الكتاب!" : state.recent ? `آخر صفحة: ${state.page} من ${book.pages}` : "رحلتك لم تبدأ بعد"}</span><strong>{percentage}%</strong></div>
           <div className="shelf-progress-track" role="progressbar" aria-label={`تقدّم قراءة ${book.title}`} aria-valuenow={percentage} aria-valuemin={0} aria-valuemax={100}><span style={{width:`${percentage}%`}}/></div>

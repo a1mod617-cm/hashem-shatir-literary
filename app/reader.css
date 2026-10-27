@@ -30,10 +30,11 @@
 .reading-page-jump span{color:#b3a48f}
 .reading-stage{min-height:460px;max-height:none;overflow:auto;overscroll-behavior:contain;background:radial-gradient(circle at center,#39332b 0%,#282827 72%);text-align:center;position:relative;padding:28px 12px 35px;scrollbar-color:#876e4e #292824;scrollbar-width:thin}
 .reading-sheet{display:flow-root;position:relative;width:max-content;min-width:260px;margin:0 auto;box-shadow:0 12px 45px #0007;background:#fff9ef;line-height:0}
-.reading-sheet canvas{max-width:none;display:block;margin:auto;transition:filter .24s}
-.reader-tone-warm .reading-sheet canvas{filter:sepia(.14) brightness(.98)}
-.reader-tone-dark .reading-sheet canvas{filter:invert(.89) hue-rotate(180deg) saturate(.58)}
-.reader-tone-original .reading-sheet canvas{filter:none}
+.reading-sheet img{max-width:none;height:auto;display:block;margin:auto;transition:filter .24s;user-select:none;-webkit-user-drag:none}
+.reader-tone-warm .reading-sheet img{filter:sepia(.1) brightness(.985)}
+.reader-tone-dark .reading-sheet img{filter:invert(.89) hue-rotate(180deg) saturate(.58)}
+.reader-tone-original .reading-sheet img{filter:none}
+.reading-view-buttons button:disabled{opacity:.45;cursor:not-allowed}
 .reader-tone-dark .reading-stage{background:#0c1116}
 .reader-tone-dark .reading-sheet{background:#181b20}
 .reader-tone-original .reading-stage{background:#333438}

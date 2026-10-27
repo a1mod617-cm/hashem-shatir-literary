@@ -7,32 +7,43 @@ import {
   ChevronRight, Download, ExternalLink, Focus, Maximize2, Minus,
   Moon, Plus, Sun, X,
 } from "lucide-react";
-import type { PDFDocumentLoadingTask, PDFDocumentProxy, RenderTask } from "pdfjs-dist";
 import type { Book } from "../data";
 
 type Tone = "warm" | "dark" | "original";
 type ViewMode = "pages" | "original";
 
+// These pages were exported from the original PDFs with Poppler to preserve
+// the author's Arabic font shapes on Safari and other mobile browsers.
+const optimizedBooks: Record<string, number> = {
+  "12-12": 112,
+  "haribini-bisharaf": 173,
+  "la-tuhaddiq-kathiran": 153,
+  "warith-al-ahd": 218,
+};
+
+function imageUrl(slug: string, page: number) {
+  return `/pages/${slug}/${String(page).padStart(3, "0")}.webp`;
+}
+
 export default function Reader({ book }: { book: Book }) {
+  const optimized = optimizedBooks[book.slug] === book.pages;
   const [page, setPage] = useState(1);
   const [draft, setDraft] = useState("1");
-  const [total, setTotal] = useState(book.pages);
+  const total = book.pages;
   const [zoom, setZoom] = useState(1);
   const [tone, setTone] = useState<Tone>("warm");
-  const [mode, setMode] = useState<ViewMode>("pages");
+  const [mode, setMode] = useState<ViewMode>(optimized ? "pages" : "original");
   const [focus, setFocus] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [busy, setBusy] = useState(true);
-  const [error, setError] = useState("");
+  const [loadedKey, setLoadedKey] = useState("");
+  const [failedKey, setFailedKey] = useState("");
   const [saved, setSaved] = useState(false);
   const [hydrated, setHydrated] = useState(false);
   const [stageWidth, setStageWidth] = useState(0);
   const stageRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const pdfRef = useRef<PDFDocumentProxy | null>(null);
-  const loadingRef = useRef<PDFDocumentLoadingTask | null>(null);
-  const renderingRef = useRef<RenderTask | null>(null);
   const touchRef = useRef<{ x: number; y: number } | null>(null);
+  const pageKey = `${book.slug}:${page}`;
+  const busy = mode === "pages" && loadedKey !== pageKey && failedKey !== pageKey;
+  const displayWidth = Math.round(Math.max(245, Math.min(990, (stageWidth || 800) - 30)) * zoom);
 
   useEffect(() => {
     try {
@@ -59,90 +70,23 @@ export default function Reader({ book }: { book: Book }) {
   }, [book.slug, page, tone, zoom, hydrated]);
 
   useEffect(() => {
-    let disposed = false;
-    async function load() {
-      setReady(false);
-      setBusy(true);
-      setError("");
-      try {
-        const pdfjs = await import("pdfjs-dist");
-        pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
-        const loading = pdfjs.getDocument({ url: book.pdf });
-        loadingRef.current = loading;
-        const document = await loading.promise;
-        if (disposed) { await document.destroy(); return; }
-        pdfRef.current = document;
-        setTotal(document.numPages);
-        setPage(current => Math.min(document.numPages, Math.max(1, current)));
-        setReady(true);
-      } catch {
-        if (!disposed) {
-          setError("تعذّر فتح العرض التفاعلي على هذا الجهاز. يمكنك فتح النسخة الأصلية أو تحميل الكتاب.");
-          setBusy(false);
-        }
-      }
-    }
-    load();
-    return () => {
-      disposed = true;
-      renderingRef.current?.cancel();
-      void loadingRef.current?.destroy();
-      pdfRef.current = null;
-    };
-  }, [book.pdf]);
-
-  useEffect(() => {
     const stage = stageRef.current;
     if (!stage) return;
     const observer = new ResizeObserver(() => setStageWidth(Math.floor(stage.clientWidth)));
     observer.observe(stage);
     setStageWidth(Math.floor(stage.clientWidth));
     return () => observer.disconnect();
-  }, [ready, mode, focus]);
+  }, [mode, focus]);
 
   useEffect(() => {
-    if (!ready || mode !== "pages" || !pdfRef.current || !canvasRef.current) return;
-    let disposed = false;
-    let task: RenderTask | null = null;
-    const document = pdfRef.current;
-    async function render() {
-      setBusy(true);
-      try {
-        if (renderingRef.current) {
-          renderingRef.current.cancel();
-          try { await renderingRef.current.promise; } catch {}
-        }
-        if (disposed) return;
-        const pdfPage = await document!.getPage(page);
-        if (disposed) return;
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-        const context = canvas.getContext("2d", { alpha: false });
-        if (!context) throw new Error("Canvas unavailable");
-        const atOne = pdfPage.getViewport({ scale: 1 });
-        const stage = stageRef.current;
-        const available = Math.max(260, Math.min(990, (stage?.clientWidth || stageWidth || 800) - 36));
-        const scale = available / atOne.width * zoom;
-        const display = pdfPage.getViewport({ scale });
-        const pixelRatio = Math.min(window.devicePixelRatio || 1, 1.8);
-        const pixels = pdfPage.getViewport({ scale: scale * pixelRatio });
-        canvas.width = Math.round(pixels.width);
-        canvas.height = Math.round(pixels.height);
-        canvas.style.width = `${Math.round(display.width)}px`;
-        canvas.style.height = `${Math.round(display.height)}px`;
-        task = pdfPage.render({ canvasContext: context, viewport: pixels });
-        renderingRef.current = task;
-        await task.promise;
-        if (!disposed) { setBusy(false); setError(""); }
-      } catch (reason) {
-        if (disposed || (reason instanceof Error && reason.name === "RenderingCancelledException")) return;
-        setError("تعذّر عرض هذه الصفحة. جرّب النسخة الأصلية للكتاب.");
-        setBusy(false);
-      }
+    if (!optimized || mode !== "pages") return;
+    // Only the visible page is rendered; prefetch the adjacent pages for fast turns.
+    for (const next of [page - 1, page + 1]) {
+      if (next < 1 || next > total) continue;
+      const preload = new window.Image();
+      preload.src = imageUrl(book.slug, next);
     }
-    void render();
-    return () => { disposed = true; task?.cancel(); };
-  }, [ready, mode, page, zoom, stageWidth]);
+  }, [optimized, mode, page, total, book.slug]);
 
   useEffect(() => {
     if (!focus) return;
@@ -214,7 +158,7 @@ export default function Reader({ book }: { book: Book }) {
         <div className="reading-panel">
           <div className="reading-settings">
             <div className="reading-view-buttons" role="group" aria-label="طريقة عرض الكتاب">
-              <button type="button" className={mode === "pages" ? "selected" : ""} onClick={() => setMode("pages")}><BookOpen size={16}/> قراءة مريحة</button>
+              <button type="button" className={mode === "pages" ? "selected" : ""} onClick={() => setMode("pages")} disabled={!optimized}><BookOpen size={16}/> قراءة مريحة</button>
               <button type="button" className={mode === "original" ? "selected" : ""} onClick={() => setMode("original")}>ملف PDF الأصلي</button>
             </div>
             <div className="reading-tools">
@@ -246,11 +190,19 @@ export default function Reader({ book }: { book: Book }) {
               <iframe title={`كتاب ${book.title} — الملف الأصلي`} className="reading-original-frame" src={`${book.pdf}#page=${page}&view=FitH`}/>
             ) : (
               <div className="reading-sheet">
-                <canvas ref={canvasRef} role="img" aria-label={`صفحة ${page} من كتاب ${book.title}`}/>
-                {busy && <div className="reading-loading" role="status"><span className="reading-spinner"/> {ready ? "جارٍ تحضير الصفحة..." : "جارٍ فتح الكتاب..."}</div>}
+                <img
+                  key={pageKey}
+                  src={imageUrl(book.slug, page)}
+                  alt={`الصفحة ${page} من كتاب ${book.title}`}
+                  style={{ width: displayWidth }}
+                  decoding="async"
+                  onLoad={() => { setLoadedKey(pageKey); setFailedKey(""); }}
+                  onError={() => setFailedKey(pageKey)}
+                />
+                {busy && <div className="reading-loading" role="status"><span className="reading-spinner"/> جارٍ تجهيز صفحة الكتاب...</div>}
               </div>
             )}
-            {error && mode === "pages" && <div className="reading-error" role="alert"><p>{error}</p><button type="button" onClick={() => setMode("original")}>افتح النسخة الأصلية</button></div>}
+            {failedKey === pageKey && mode === "pages" && <div className="reading-error" role="alert"><p>تعذّر تحميل هذه الصفحة. يمكنك متابعة القراءة من الملف الأصلي أو تنزيله.</p><button type="button" onClick={() => setMode("original")}>افتح النسخة الأصلية</button></div>}
           </div>
 
           <div className="reading-progress" aria-label={`أنجزت ${progress} بالمائة من صفحات الكتاب`}>
@@ -262,7 +214,7 @@ export default function Reader({ book }: { book: Book }) {
             <a href={`${book.pdf}#page=${page}`} target="_blank" rel="noreferrer"><ExternalLink size={15}/> فتح الكتاب خارج الموقع</a>
           </div>
         </div>
-        <p className="reading-note"><Focus size={15}/> هذه الصفحات مطابقة للكتاب الأصلي وتحافظ على العربية وتنسيق المؤلف. استخدم التكبير لتكبير الحروف، وعلى الهاتف يمكنك السحب أفقيًا لتغيير الصفحة.</p>
+        <p className="reading-note"><Focus size={15}/> الصفحات مأخوذة من الكتاب الأصلي بدقة عالية للحفاظ على الحروف العربية وتنسيق المؤلف. كبّر الصفحة عند الحاجة، واسحب أفقيًا على الجوال للتنقل.</p>
       </div>
     </main>
   );

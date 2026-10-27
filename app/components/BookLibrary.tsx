@@ -77,7 +77,7 @@ function BookCard({book,index,onPreview}:{book:Book;index:number;onPreview:(book
       <button type="button" className="book-quick-btn" onClick={()=>onPreview(book)}><Eye size={16}/> نظرة سريعة</button>
       <div className="book-reflection" aria-hidden="true"/>
     </div>
-    <div className="book-info"><span className="book-index">{String(index+1).padStart(2,"0")} / {book.year}</span><h3><Link href={`/books/${book.slug}`}>{book.title}</Link></h3><p>{book.subtitle || book.type}</p><button type="button" className="book-arrow" aria-label={`معاينة ${book.title}`} onClick={()=>onPreview(book)}><ArrowLeft size={19}/></button></div>
+    <div className="book-info"><span className="book-index">{String(index+1).padStart(2,"0")} / {book.year}</span><h3><Link href={`/books/${book.slug}`}>{book.title}</Link></h3><p>{book.subtitle || book.type}</p><Link href={`/read/${book.slug}`} className="book-read-direct"><BookOpen size={16}/> اقرأ الكتاب الآن <ArrowLeft size={14}/></Link><button type="button" className="book-arrow" aria-label={`معاينة ${book.title}`} onClick={()=>onPreview(book)}><ArrowLeft size={19}/></button></div>
   </article>;
 }
 

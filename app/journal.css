@@ -1,0 +1,36 @@
+/* The writing room — restrained editorial typography on dark paper. */
+.journal-home-banner{background:linear-gradient(110deg,#171716,#211b16 53%,#151517);border-top:1px solid var(--line);padding:65px 0}
+.journal-home-inner{display:grid;grid-template-columns:110px minmax(0,1fr) auto;align-items:center;gap:30px}
+.journal-home-mark{width:95px;height:95px;display:grid;place-items:center;color:var(--gold-light);border:1px solid #786044;border-radius:50%}
+.journal-home-inner h2{font-size:clamp(33px,4.5vw,58px);line-height:1.35;margin:4px 0}
+.journal-home-inner p{color:#b8b1a7;line-height:1.8;max-width:630px}
+.journal-page-hero{background:radial-gradient(ellipse at 85% 10%,#3b2b1f,#101214 68%)}
+.journal-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.journal-card{display:flex;flex-direction:column;min-height:340px;padding:30px;background:linear-gradient(150deg,#23201c,#151619 75%);border:1px solid #473b2c;color:var(--cream);transition:transform .25s,border-color .25s}
+.journal-card:hover{transform:translateY(-5px);border-color:var(--gold)}
+.journal-card-number{font-size:48px;font-family:'Amiri';color:#806b51;margin-bottom:23px;line-height:1}
+.journal-card h2{font-size:34px;line-height:1.5;margin:13px 0}
+.journal-card p{color:#b8afa3;line-height:1.9;flex:1}
+.journal-card .text-link{align-self:flex-start}
+.journal-empty{max-width:720px;margin:0 auto;text-align:center;padding:70px 25px}
+.journal-empty-icon{color:var(--gold);margin-bottom:24px}
+.journal-empty h2{font-size:clamp(45px,6vw,74px);margin:10px 0}
+.journal-empty p{font-size:17px;line-height:2;color:#bab2a6;max-width:490px;margin:0 auto 28px}
+.journal-footnote{border-top:1px solid var(--line);text-align:center;display:flex;align-items:center;justify-content:center;gap:15px;margin-top:55px;padding:30px 10px;color:#a99070;font-family:'Amiri';font-size:20px}
+.journal-article-head h1{max-width:930px;font-size:clamp(52px,6vw,82px)}
+.journal-article-body{max-width:810px;margin:0 auto 60px;border-right:2px solid #776047;padding-right:34px}
+.journal-article-body p{font-family:'Amiri';font-size:clamp(23px,2.5vw,28px);line-height:2.35;white-space:pre-line;color:#ddd3c2;margin-bottom:26px}
+.journal-signature{border-top:1px solid var(--line);padding-top:26px;margin-top:45px;color:var(--gold-light);display:flex;align-items:center;gap:10px;font-family:'Amiri';font-size:26px}
+.journal-admin-grid{display:grid;grid-template-columns:280px minmax(0,1fr);gap:40px;align-items:start}
+.journal-admin-list{background:#191a1b;border:1px solid #423829;padding:22px}
+.journal-admin-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.journal-admin-head h2{font-size:30px;font-family:'Amiri'}
+.journal-admin-item{display:block;width:100%;text-align:right;border:0;border-bottom:1px solid #403a32;background:none;padding:13px;color:#dfd1bb}
+.journal-admin-item.active{background:#30271d}
+.journal-admin-item span,.journal-admin-item small{display:block}
+.journal-admin-item small{color:#ac9a83;margin-top:7px}
+.journal-admin-editor .admin-form{max-width:none}
+.journal-body-field{min-height:320px!important;resize:vertical;line-height:1.9}
+.journal-admin-actions{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:900px){.journal-home-inner{grid-template-columns:80px 1fr}.journal-home-mark{width:72px;height:72px}.journal-home-inner .btn{grid-column:2;justify-self:start}.journal-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.journal-home-inner{grid-template-columns:1fr;text-align:center;justify-items:center}.journal-home-inner .btn{grid-column:1;justify-self:center}.journal-cards{grid-template-columns:1fr}.journal-card{min-height:290px}.journal-article-body{padding-right:20px}.journal-admin-grid{grid-template-columns:1fr}.journal-admin-list{padding:18px}}

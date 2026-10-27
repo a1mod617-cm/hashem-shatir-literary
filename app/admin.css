@@ -1,0 +1,30 @@
+.admin-section-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:25px}
+.admin-section-head h2{font:400 48px 'Amiri';margin-top:8px}
+.admin-insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-bottom:32px}
+.admin-insights>div{display:flex;align-items:flex-start;flex-direction:column;gap:9px;padding:23px 27px;background:linear-gradient(120deg,#262018,#18191b);border:1px solid #584734}
+.admin-insights svg{color:var(--gold)}
+.admin-insights strong{font:400 36px 'Amiri';line-height:1;color:#e5c69a}
+.admin-insights span{color:#b5a48d;font-size:13px}
+.admin-review-tools{display:flex;align-items:center;justify-content:space-between;gap:25px;margin-bottom:22px;flex-wrap:wrap}
+.admin-review-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.admin-review-card{border:1px solid #4a3e2e;background:#1b1c1d;padding:24px;min-width:0}
+.admin-review-top{display:flex;align-items:center;justify-content:space-between;gap:13px}
+.admin-review-top>div{display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.admin-review-avatar{display:grid;place-items:center;width:36px;height:36px;border:1px solid #88683f;background:#453320;color:#f2d2a4;border-radius:50%;font-family:'Amiri';font-size:23px}
+.admin-review-top strong{color:#f0ddc1}
+.admin-review-top small{color:#998c7b}
+.admin-review-status{white-space:nowrap;color:#ddbd82;border:1px solid #8e7146;padding:7px 10px;font-size:11px}
+.admin-review-status.approved{color:#9bccad;border-color:#608f70}
+.admin-review-status.rejected{color:#db9d95;border-color:#9c5b54}
+.admin-review-book{font-size:13px;color:#a89985;margin:20px 0 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.admin-review-book span{color:#d5a96a;direction:ltr}
+.admin-review-card p{font-size:16px;line-height:1.9;color:#cec5b7;min-height:55px;white-space:pre-wrap;overflow-wrap:anywhere}
+.admin-review-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px;border-top:1px solid #453b30;padding-top:17px}
+.admin-review-actions button{border:1px solid #796246;background:none;color:#d9bd94;padding:10px 12px;display:flex;align-items:center;gap:8px;font-size:12px;transition:.2s}
+.admin-review-actions button:hover:not(:disabled){background:#41311e;color:#ffe0a8}
+.admin-review-actions button:disabled{opacity:.35;cursor:not-allowed}
+.admin-review-empty{text-align:center;padding:50px 20px;color:#b5a58e;border:1px dashed #665640}
+.admin-review-empty svg{color:var(--gold);margin:0 auto 17px}
+.admin-review-empty h3{font:400 32px 'Amiri';margin-bottom:10px}
+@media(max-width:850px){.admin-review-list{grid-template-columns:1fr}.admin-review-tools{align-items:stretch;flex-direction:column}.admin-review-tools .book-search{width:100%}}
+@media(max-width:760px){.admin-insights{gap:9px}.admin-insights>div{padding:14px}.admin-insights strong{font-size:31px}.admin-insights span{font-size:11px}.admin-review-card{padding:17px}.admin-section-head h2{font-size:37px}}

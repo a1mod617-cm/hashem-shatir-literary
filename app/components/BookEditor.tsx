@@ -1,0 +1,11 @@
+"use client";
+import { useEffect, useState } from "react";
+import { Save } from "lucide-react";
+import { books as originals, type Book } from "../data";
+export default function BookEditor(){const [items,setItems]=useState<Book[]>(originals);const [selected,setSelected]=useState(originals[0].slug);const [message,setMessage]=useState("");const [busy,setBusy]=useState(false);
+  useEffect(()=>{fetch("/api/books").then(r=>r.json() as Promise<{books?:Book[]}>).then(d=>{if(d.books)setItems(d.books)}).catch(()=>{})},[]);
+  const book=items.find(b=>b.slug===selected)??items[0];
+  function edit(field:"title"|"description"|"genre",value:string){setItems(current=>current.map(book=>book.slug===selected?{...book,[field]:value}:book))}
+  async function save(event:React.FormEvent){event.preventDefault();setBusy(true);setMessage("");try{const r=await fetch("/api/admin/books",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify({slug:book.slug,title:book.title,description:book.description,genre:book.genre})});const d=await r.json() as {error?:string};setMessage(r.ok?"تم حفظ التعديلات. ستظهر للقراء عند تحديث الصفحة.":d.error||"تعذر الحفظ")}catch{setMessage("حدث خطأ في الاتصال")}finally{setBusy(false)}}
+  return <div><h2 style={{fontFamily:"Amiri",fontSize:40}}>إدارة بيانات <em>الكتب</em></h2><p className="muted" style={{marginBottom:25}}>اختر أي مؤلف لتعديل عنوانه وتصنيفه ووصفه؛ تظهر التعديلات بعد الحفظ.</p><form onSubmit={save} className="admin-form"><label>العمل<select value={selected} onChange={e=>setSelected(e.target.value)} style={{background:"#101113",border:"1px solid #544b40",color:"#eee",padding:13}}>{items.map(b=><option key={b.slug} value={b.slug}>{b.title}</option>)}</select></label><label>العنوان<input value={book.title} onChange={e=>edit("title",e.target.value)} required maxLength={100}/></label><label>التصنيف<input value={book.genre} onChange={e=>edit("genre",e.target.value)} required maxLength={100}/></label><label>نبذة الكتاب<textarea style={{minHeight:130}} value={book.description} onChange={e=>edit("description",e.target.value)} minLength={10} required/></label><button type="submit" disabled={busy} className="btn btn-gold"><Save size={16}/>{busy?"جاري الحفظ...":"حفظ التعديلات"}</button>{message&&<p className="notice" role="status">{message}</p>}</form></div>
+}

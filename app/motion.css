@@ -1,0 +1,65 @@
+/* Cinematic touches — motion supports the books, never distracts from them. */
+.reading-progress{position:fixed;top:0;right:0;left:0;height:3px;z-index:150;background:linear-gradient(to left,#d2ae7d,#f2d6a8,#8e6c42);transform:scaleX(0);transform-origin:right center;box-shadow:0 0 15px #cb995b7a;pointer-events:none}
+html.motion-ready .motion-reveal{opacity:0;transform:translate3d(0,28px,0);transition:opacity .72s ease,transform .82s cubic-bezier(.2,.8,.2,1)}
+html.motion-ready .motion-reveal.is-visible{opacity:1;transform:translate3d(0,0,0)}
+html.motion-ready .book-card.motion-reveal.is-visible:hover{transform:perspective(1200px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-7px)}
+.hero h1{animation:heroRise .9s cubic-bezier(.2,.8,.2,1) both}
+.hero-lead{animation:heroRise 1s .13s both}
+.hero-actions{animation:heroRise 1s .24s both}
+.hero-portrait-frame{animation:portraitReveal 1s .15s both}
+.hero-orbit.orbit-one{animation:orbitFloat 20s ease-in-out infinite}
+.hero-orbit.orbit-two{animation:orbitFloat 24s ease-in-out infinite reverse}
+.btn{position:relative;isolation:isolate;overflow:hidden;transition:transform .24s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,border-color .25s,box-shadow .25s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 20%,#ffffff3b 48%,transparent 72%);transform:translateX(120%);transition:transform .65s ease;pointer-events:none}
+.btn:hover::after{transform:translateX(-120%)}
+.btn-gold:hover{box-shadow:0 8px 32px #c4a27730}
+.btn:active{transform:translateY(0) scale(.97)}
+:is(a,button,input,textarea,select):focus-visible{outline:2px solid #e2bc7d;outline-offset:4px}
+.book-card{transform-style:preserve-3d;transition:transform .38s cubic-bezier(.2,.8,.2,1),opacity .5s;--rx:0deg;--ry:0deg;--mx:50%;--my:50%}
+.book-card:hover{transform:perspective(1200px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(-7px)}
+.book-cover-link{display:block;width:100%;height:100%;position:relative;color:inherit}
+.book-cover-link img{display:block}
+.book-reflection{position:absolute;inset:-1px;z-index:2;pointer-events:none;background:radial-gradient(circle at var(--mx) var(--my),rgba(255,237,202,.16),transparent 42%);opacity:0;transition:opacity .3s}
+.book-card:hover .book-reflection{opacity:1}
+.book-card .book-info h3 a{color:inherit;transition:color .25s}
+.book-card .book-info h3 a:hover{color:var(--gold-light)}
+.book-quick-btn{position:absolute;bottom:17px;left:50%;transform:translate(-50%,14px);z-index:5;display:flex;align-items:center;justify-content:center;gap:8px;min-width:155px;padding:11px 12px;border:1px solid #e8caa69e;background:rgba(15,14,14,.86);backdrop-filter:blur(15px);color:#f1dec0;font-size:12px;font-weight:700;opacity:0;transition:transform .3s,opacity .3s,background .2s;white-space:nowrap}
+.book-card:hover .book-quick-btn,.book-quick-btn:focus-visible{transform:translate(-50%,0);opacity:1}
+.book-quick-btn:hover{background:rgba(100,74,42,.94)}
+.book-card .book-arrow{background:none;border:0;padding:7px;color:var(--gold);transition:transform .23s}
+.book-card:hover .book-arrow{transform:translateX(-5px)}
+.cover-gallery-stage img{animation:coverReveal .5s cubic-bezier(.2,.8,.2,1) both}
+.quote-panel{overflow:hidden}
+.quote-panel::after{content:"";position:absolute;inset:-70%;background:radial-gradient(ellipse,#c8a36b09,transparent 60%);pointer-events:none;animation:quoteAmbience 14s ease-in-out infinite}
+.quote-controls button:active,.quote-categories button:active,.cover-thumbs button:active,.filter-tabs button:active{transform:scale(.94)}
+.quick-view-backdrop{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:28px;background:rgba(4,5,7,.82);backdrop-filter:blur(17px);animation:backdropIn .25s ease both}
+.quick-view-panel{position:relative;max-height:min(91vh,790px);width:min(100%,1030px);display:grid;grid-template-columns:43% 57%;overflow:auto;border:1px solid #80664a;background:radial-gradient(ellipse at 78% 26%,#2b251e,#121417 66%);box-shadow:0 50px 150px #000c,0 0 0 6px #ffffff07;animation:modalEnter .48s cubic-bezier(.16,1,.3,1) both}
+.quick-view-close{position:absolute;top:19px;left:19px;z-index:4;border:1px solid #a28b68;background:#0d0e10a8;color:#e9d5b2;width:42px;height:42px;display:grid;place-items:center;transition:background .2s,transform .2s}
+.quick-view-close:hover{background:#634b31;transform:rotate(90deg)}
+.quick-view-art{position:relative;min-height:540px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:25px;overflow:hidden;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--book-accent) 40%,#171515),#111316 72%)}
+.quick-view-halo{position:absolute;width:380px;height:380px;border:1px solid #e2c7a236;border-radius:50%;box-shadow:0 0 0 35px #edcd9c08,0 0 0 74px #edcd9c05;animation:orbitFloat 14s ease-in-out infinite}
+.quick-view-art img{position:relative;width:min(255px,62%);max-height:375px;object-fit:contain;box-shadow:20px 22px 45px #000a;transform:rotate(-4deg);animation:bookEnter .7s cubic-bezier(.16,1,.3,1) both}
+.quick-view-art span{font-family:'Amiri',serif;font-size:18px;color:#d4b590;letter-spacing:.4px}
+.quick-view-copy{padding:75px 55px 45px;display:flex;flex-direction:column;align-items:flex-start}
+.quick-view-copy h2{font-size:clamp(48px,5vw,78px);line-height:1.3;margin:20px 0 0}
+.quick-view-subtitle{font-family:'Amiri',serif;font-size:23px;color:#d9bd92}
+.quick-view-meta{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0}
+.quick-view-meta span{border:1px solid #6e5a42;color:#c9ad84;padding:7px 11px;font-size:12px}
+.quick-view-description{color:#c9c0b4;line-height:2.1;font-size:17px;margin-top:10px}
+.quick-view-pages{color:#927f66;font-size:14px;margin-top:17px}
+.quick-view-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:30px}
+.quick-view-actions .btn{padding:13px 20px;min-height:48px}
+.quick-view-download{display:flex;align-items:center;gap:9px;color:#c5a779;border-bottom:1px solid #846c49;padding:7px 0;margin-top:25px;font-size:13px}
+.quick-view-download:hover{color:#ffe0ac}
+@keyframes heroRise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes portraitReveal{from{opacity:0;transform:translateY(35px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes orbitFloat{0%,100%{transform:scale(1)}50%{transform:scale(1.035)}}
+@keyframes coverReveal{from{opacity:.3;transform:scale(.965)}to{opacity:1;transform:scale(1)}}
+@keyframes quoteAmbience{0%,100%{transform:translateX(-4%)}50%{transform:translateX(4%)}}
+@keyframes backdropIn{from{opacity:0}to{opacity:1}}
+@keyframes modalEnter{from{opacity:0;transform:translateY(28px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes bookEnter{from{opacity:0;transform:translateY(35px) rotate(4deg) scale(.9)}to{opacity:1;transform:translateY(0) rotate(-4deg) scale(1)}}
+@media(max-width:900px){.quick-view-panel{grid-template-columns:40% 60%}.quick-view-art{min-height:490px}.quick-view-copy{padding:65px 35px 35px}}
+@media(max-width:760px){.quick-view-backdrop{padding:12px}.quick-view-panel{grid-template-columns:1fr;max-height:94dvh}.quick-view-art{min-height:230px;gap:8px;padding:26px 20px 15px}.quick-view-art img{width:115px;max-height:155px}.quick-view-halo{width:190px;height:190px}.quick-view-art span{font-size:14px}.quick-view-copy{padding:25px 24px 35px}.quick-view-copy h2{font-size:45px;margin-top:8px}.quick-view-description{font-size:15px;line-height:1.8}.quick-view-meta{margin:13px 0}.quick-view-actions{margin-top:18px}.quick-view-actions .btn{font-size:12px;padding:11px 13px}.quick-view-close{top:13px;left:13px}.book-quick-btn{opacity:1;transform:translate(-50%,0);bottom:10px;padding:8px 10px;min-width:125px;font-size:11px}}
+@media(hover:none){.book-quick-btn{opacity:1;transform:translate(-50%,0)}.book-card{transform:none!important}.book-reflection{display:none}}
+@media(prefers-reduced-motion:reduce){html.motion-ready .motion-reveal{opacity:1!important;transform:none!important;transition:none!important}.hero h1,.hero-lead,.hero-actions,.hero-portrait-frame,.hero-orbit,.quick-view-backdrop,.quick-view-panel,.quick-view-art img,.quick-view-halo,.quote-panel::after,.cover-gallery-stage img{animation:none!important}.btn::after{display:none}.book-card{transform:none!important;transition:none!important}}

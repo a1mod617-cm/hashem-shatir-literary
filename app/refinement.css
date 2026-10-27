@@ -1,0 +1,247 @@
+/* Fourth edition — tangible literary objects and soft, tactile controls. */
+
+/* The volume is composed of six physical faces. Actual uploaded artwork stays crisp. */
+.book3d {
+  --depth: 24px;
+  --book-edge: #9f805b;
+  width: min(74%, 220px);
+  aspect-ratio: .706;
+  position: relative;
+  flex: none;
+  display: block;
+  perspective: 1150px;
+  transform-style: preserve-3d;
+  isolation: isolate;
+}
+.book3d-volume {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateY(-21deg) rotateX(4deg) rotateZ(-1.6deg);
+  transition: transform .9s cubic-bezier(.18,.82,.18,1);
+  will-change: transform;
+}
+.book3d-front,
+.book3d-back,
+.book3d-light,
+.book3d-edge { position: absolute; display: block; backface-visibility: hidden; }
+.book3d .book3d-front {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-height: none !important;
+  object-fit: cover !important;
+  border-radius: 2px 5px 5px 2px;
+  border: 1px solid #e4d3ae66;
+  box-shadow: inset 1px 0 7px #0009, 12px 17px 31px #0009;
+  transform: translateZ(12px) !important;
+  filter: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+.book3d-back {
+  inset: 0;
+  background: radial-gradient(circle at 70% 22%, color-mix(in srgb, var(--book-edge) 40%, #1b1a1b), #141415 75%);
+  border: 1px solid #9d886e;
+  box-shadow: 8px 14px 30px #0008;
+  transform: rotateY(180deg) translateZ(12px);
+  overflow: hidden;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+}
+.book3d-back img { width: 100% !important; height: 100% !important; object-fit: cover !important; max-height: none !important; transform: none !important; animation: none !important; }
+.book3d-back-inscription { font: 28px/1.5 'Amiri',serif !important; color: #e6caa0 !important; padding: 24px; text-align: center; }
+.book3d-edge--spine {
+  left: -12px; top: 0; width: var(--depth); height: 100%;
+  transform: rotateY(-90deg);
+  background: linear-gradient(90deg,#060606, color-mix(in srgb,var(--book-edge) 68%,#171210) 48%,#15110f);
+  border-block: 1px solid #a0805288;
+  box-shadow: inset 4px 0 6px #000b;
+}
+.book3d-edge--pages {
+  right: -12px; top: 0; width: var(--depth); height: 100%;
+  transform: rotateY(90deg);
+  background: repeating-linear-gradient(to bottom,#e5decf 0 1px,#b8ae9d 1px 2px,#ded5c6 2px 3px);
+  border-inline: 3px solid #b5a48e;
+  box-shadow: inset 4px 0 7px #786b5f66;
+}
+.book3d-edge--top,
+.book3d-edge--bottom {
+  width: 100%; height: var(--depth); left: 0;
+  background: repeating-linear-gradient(90deg,#d4cabb 0 1px,#b0a493 1px 2px,#eee4d5 2px 4px);
+  border-inline: 3px solid #8b7053;
+}
+.book3d-edge--top { top: -12px; transform: rotateX(90deg); }
+.book3d-edge--bottom { bottom: -12px; transform: rotateX(-90deg); }
+.book3d-light {
+  inset: 0;
+  transform: translateZ(12.5px);
+  background: linear-gradient(118deg,rgba(255,255,255,.22),transparent 27%,transparent 64%,rgba(0,0,0,.27)),linear-gradient(90deg,#0009,transparent 6%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.book3d-floor {
+  display: block;
+  position: absolute;
+  width: 95%; height: 24px;
+  bottom: -23px; left: 7%;
+  border-radius: 50%;
+  background: #000b;
+  filter: blur(14px);
+  transform: rotate(-2deg);
+  z-index: -1;
+  pointer-events: none;
+}
+@media (hover:hover) and (pointer:fine) {
+  .book-cover-link:hover .book3d-volume,
+  .feature-cover:hover .book3d-volume,
+  .shelf-cover:hover .book3d-volume,
+  .cover-gallery-stage:hover .book3d:not(.book3d--flipped) .book3d-volume {
+    transform: rotateY(-8deg) rotateX(1deg) rotateZ(0deg) translateY(-9px);
+  }
+  .book-cover-link:hover .book3d-floor,
+  .feature-cover:hover .book3d-floor { filter: blur(18px); transform: scale(1.13); }
+}
+.book3d--flipped .book3d-volume,
+.cover-gallery-stage:hover .book3d--flipped .book3d-volume {
+  transform: rotateY(-162deg) rotateX(4deg) rotateZ(1deg);
+}
+
+/* A gallery of objects, rather than four flat posters. */
+.book-image {
+  border-radius: 23px;
+  background: radial-gradient(ellipse at 50% 40%,#44392c 0%,#212021 40%,#111214 82%);
+}
+.book-image::before {
+  content: "";
+  position: absolute;
+  width: 75%; height: 66%;
+  left: 12%; top: 12%;
+  background: radial-gradient(ellipse,rgba(199,155,96,.15),transparent 75%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+.book-cover-link { display: flex; align-items: center; justify-content: center; }
+.book-cover-link .book3d { z-index: 1; margin-top: -11px; }
+.book-category { border-radius: 999px; padding: 7px 13px; }
+.book-hover { border-radius: 22px; background: #0d0e10a6; backdrop-filter: blur(2px); }
+.book-image .book3d--card .book3d-front { height: 100% !important; width: 100% !important; }
+.book-quick-btn { border-radius: 999px; box-shadow: 0 8px 26px #0009; }
+.book-card:hover .book3d-front { filter: none !important; transform: translateZ(12px) !important; }
+.book-info h3 a { text-decoration-thickness: 1px; text-underline-offset: 4px; }
+
+.quick-view-panel { border-radius: 28px; }
+.quick-view-art { border-radius: 28px 0 0 28px; }
+.quick-view-art .book3d--modal { width: min(62%,245px); }
+.quick-view-art .book3d-front { box-shadow: 12px 20px 40px #0009; }
+.quick-view-art > span { position: relative; }
+.book3d-modal-turn { z-index: 2; color: #efdbb9; display: inline-flex; align-items: center; gap: 9px; border: 1px solid #c8a3768c; background: #111217c7; backdrop-filter: blur(9px); border-radius: 999px; padding: 10px 16px; font: 700 12px 'Tajawal',sans-serif; cursor: pointer; transition: background .25s,transform .25s; }
+.book3d-modal-turn:hover { background: #57422b; transform: translateY(-2px); }
+.book3d-modal-turn:active { transform: scale(.96); }
+.quick-view-close { border-radius: 50%; }
+.quick-view-meta span { border-radius: 999px; }
+.quick-view-download { border-radius: 0; }
+
+/* A hero object large enough to read the true cover artwork. */
+.feature-cover {
+  width: min(350px,100%);
+  max-width: none;
+  height: 455px;
+  display: grid;
+  place-items: center;
+  transform: none;
+  box-shadow: none;
+}
+.feature-cover::before { content: none; }
+.feature-cover .book3d--feature { width: min(80%,285px); }
+.feature-cover .book3d-floor { bottom: -24px; height: 29px; filter: blur(18px); }
+.feature-cover .book3d-front { box-shadow: 20px 27px 65px #000c; }
+
+/* The book detail lets visitors actually rotate the volume to inspect its back. */
+.cover-gallery-stage {
+  border-radius: 23px;
+  background: radial-gradient(ellipse at 50% 45%,#40362c,#151515 66%,#0d0e10);
+}
+.cover-gallery-stage .book3d--detail { width: min(68%,270px); }
+.cover-gallery-stage .book3d-back img { width: 100% !important; height: 100% !important; }
+.cover-gallery-label { border-radius: 999px; }
+.book3d-turn {
+  position: absolute; z-index: 5; top: 17px; left: 16px;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  color: #e9d5b5; background: #121214d9; backdrop-filter: blur(10px);
+  border: 1px solid #bda17a88; border-radius: 999px;
+  padding: 11px 16px; font: 700 12px 'Tajawal',sans-serif;
+  cursor: pointer;
+  transition: background .2s, transform .2s, border-color .2s;
+}
+.book3d-turn:hover { background: #483825; border-color: #e2c296; transform: translateY(-2px); }
+.book3d-turn:active { transform: scale(.96); }
+.cover-thumbs button { border-radius: 15px; overflow: hidden; }
+.cover-thumbs img { border-radius: 8px; }
+
+/* Rounded language across the entire interface, inspired by the user's reference. */
+.btn,
+.nav-reading,
+.filter-tabs button,
+.social-buttons a,
+.quote-categories button,
+.quote-controls button,
+.menu-toggle,
+.shelf-done,
+.journal-filter,
+.journal-category,
+.admin-form button { border-radius: 999px; }
+.btn { box-shadow: inset 0 1px 0 #ffffff1a; }
+.btn:hover { transform: translateY(-3px) scale(1.015); }
+.btn-gold { background: linear-gradient(120deg,#e2be8a,#c79b65); color: #211a13; }
+.btn-outline { background: #d9bd8c0a; }
+.btn:active { transform: scale(.965); }
+.filter-tabs button { padding-inline: 19px; }
+.book-search { padding: 11px 16px; border: 1px solid #585042; border-radius: 999px; background: #ffffff06; }
+.book-search:focus-within { border-color: #c09a6e; box-shadow: 0 0 0 3px #b9915c21; }
+.book-search input { min-width: 100px; }
+.detail-facts span,
+.quick-view-meta span,
+.journal-tag { border-radius: 999px; }
+.review-form,.review-item,.shelf-book,.shelf-stats > div,.shelf-empty,.journal-card,.blog-card,.admin-card { border-radius: 22px; }
+.review-form input,.review-form textarea,.admin-form input,.admin-form textarea,.admin-form select { border-radius: 13px; }
+.review-form input:focus,.review-form textarea:focus,.admin-form input:focus,.admin-form textarea:focus { border-color:#cba26d;box-shadow:0 0 0 3px #bd92611f; }
+.notice { border-radius: 13px; }
+.quick-view-art .book3d-back-inscription { font-size: 26px !important; }
+
+/* Reading shelf: handsome compact miniatures, including their real page edges. */
+.shelf-cover { display: grid; place-items: center; overflow: visible; box-shadow: none; background: radial-gradient(ellipse,#4c3a27,#18191a 70%); border-radius: 14px; }
+.shelf-cover .book3d--shelf { width: min(82%,155px); }
+.shelf-cover .book3d-front { width: 100% !important; height: 100% !important; }
+.shelf-cover:hover .book3d-front { transform: translateZ(12px) !important; }
+.shelf-progress-track { border-radius: 999px; }
+.shelf-progress-track > span { border-radius: 999px; }
+.shelf-done { border: 1px solid #6b583e; padding: 10px 13px; }
+
+@media(max-width:760px) {
+  .book-image { border-radius: 16px; }
+  .book-cover-link .book3d--card { width: min(72%,155px); margin-top: -14px; }
+  .quick-view-panel { border-radius: 22px; }
+  .quick-view-art { border-radius: 22px 22px 0 0; }
+  .quick-view-art .book3d--modal { width: 110px; }
+  .book3d-modal-turn { font-size: 11px; padding: 8px 12px; }
+  .quick-view-art > span { font-size: 14px; }
+  .feature-cover { width: 100%; height: 380px; }
+  .feature-cover .book3d--feature { width: min(64%,235px); }
+  .cover-gallery-stage .book3d--detail { width: min(62%,240px); }
+  .book3d-turn { top: 11px; left: 11px; padding: 9px 12px; font-size: 11px; }
+  .filter-tabs button { padding: 10px 14px; }
+  .shelf-cover .book3d--shelf { width: min(85%,108px); }
+}
+@media(max-width:390px) {
+  .book-cover-link .book3d--card { width: min(74%,120px); }
+  .book-quick-btn { bottom: 7px; min-width: 111px; padding: 7px; font-size: 10px; }
+  .book3d-turn { padding: 8px 10px; }
+  .shelf-cover .book3d--shelf { width: min(86%,92px); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .book3d-volume,.book3d-floor,.btn,.book3d-turn,.book3d-modal-turn { transition: none !important; }
+  .book-cover-link:hover .book3d-volume,.feature-cover:hover .book3d-volume,.shelf-cover:hover .book3d-volume { transform: rotateY(-21deg) rotateX(4deg) rotateZ(-1.6deg); }
+  .book3d--flipped .book3d-volume { transform: rotateY(-162deg) rotateX(4deg) rotateZ(1deg); }
+}

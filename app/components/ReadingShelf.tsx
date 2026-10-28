@@ -39,10 +39,10 @@ export default function ReadingShelf() {
     }).catch(() => {});
   }, []);
   useEffect(() => {
-    refresh();
+    const frame = requestAnimationFrame(refresh);
     window.addEventListener("focus", refresh);
     window.addEventListener("storage", refresh);
-    return () => { window.removeEventListener("focus", refresh); window.removeEventListener("storage", refresh); };
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("focus", refresh); window.removeEventListener("storage", refresh); };
   }, [refresh]);
 
   const stats = useMemo(() => {

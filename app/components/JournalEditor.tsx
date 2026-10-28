@@ -31,7 +31,7 @@ export default function JournalEditor() {
   }
 
   useEffect(() => {
-    refresh().catch(error => setMessage(error instanceof Error ? error.message : "تعذر الاتصال"))
+    void Promise.resolve().then(refresh).catch(error => setMessage(error instanceof Error ? error.message : "تعذر الاتصال"))
       .finally(() => setLoading(false));
   }, []);
 

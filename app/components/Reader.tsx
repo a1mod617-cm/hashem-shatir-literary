@@ -49,6 +49,8 @@ export default function Reader({ book }: { book: Book }) {
     try {
       const last = Number(localStorage.getItem(`read-${book.slug}`));
       if (last > 0 && last <= book.pages) {
+        // Legacy reader: hydrate saved local progress after SSR.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPage(last);
         setDraft(String(last));
       }

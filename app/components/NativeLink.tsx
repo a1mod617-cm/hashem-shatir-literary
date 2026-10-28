@@ -12,5 +12,6 @@ type Props = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> & {
  * A native anchor works even if hydration or client-side routing fails.
  */
 export default function NativeLink({ href, prefetch: _prefetch, ...props }: Props) {
+  void _prefetch;
   return <a {...props} href={href} />;
 }

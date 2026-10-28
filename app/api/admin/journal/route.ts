@@ -3,6 +3,7 @@ import { desc, eq } from "drizzle-orm";
 import { getDb } from "../../../../db";
 import { journalPosts } from "../../../../db/schema";
 import { checkAdmin } from "../../../lib/admin";
+import { isCrossOriginWrite, readBoundedJson } from "../../../lib/request-security";
 
 export const runtime = "edge";
 
@@ -33,9 +34,9 @@ function extract(input: Record<string, unknown>) {
 
 export async function POST(request: NextRequest) {
   if (!(await checkAdmin()).isAdmin) return NextResponse.json({ error: "غير مخول" }, { status: 403 });
-  let input: Record<string, unknown>;
-  try { input = await request.json() as Record<string, unknown>; }
-  catch { return NextResponse.json({ error: "بيانات غير صالحة" }, { status: 400 }); }
+  if (isCrossOriginWrite(request)) return NextResponse.json({ error: "مصدر غير موثوق" }, { status: 403 });
+  const input = await readBoundedJson(request, 120000);
+  if (!input) return NextResponse.json({ error: "بيانات غير صالحة" }, { status: 400 });
   const post = extract(input);
   if (!post) return NextResponse.json({ error: "يرجى ملء الحقول؛ نص المقال لا يقل عن 20 حرفًا" }, { status: 400 });
   try {
@@ -48,9 +49,9 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   if (!(await checkAdmin()).isAdmin) return NextResponse.json({ error: "غير مخول" }, { status: 403 });
-  let input: Record<string, unknown>;
-  try { input = await request.json() as Record<string, unknown>; }
-  catch { return NextResponse.json({ error: "بيانات غير صالحة" }, { status: 400 }); }
+  if (isCrossOriginWrite(request)) return NextResponse.json({ error: "مصدر غير موثوق" }, { status: 403 });
+  const input = await readBoundedJson(request, 120000);
+  if (!input) return NextResponse.json({ error: "بيانات غير صالحة" }, { status: 400 });
   const post = extract(input);
   if (!post) return NextResponse.json({ error: "بيانات المقال غير صالحة" }, { status: 400 });
   try {

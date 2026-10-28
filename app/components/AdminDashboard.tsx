@@ -26,7 +26,7 @@ export default function AdminDashboard() {
   }
 
   useEffect(() => {
-    void reload();
+    void Promise.resolve().then(reload);
     fetch("/api/books").then(r=>r.json() as Promise<{books?:Book[]}>).then(d=>setBooks(d.books??[])).catch(()=>{});
   }, []);
 

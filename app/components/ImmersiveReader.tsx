@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "./NativeLink";
 import {
   ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, Download,
@@ -38,7 +38,7 @@ function nextReadable(current: number, direction: 1 | -1, total: number, exclude
 export default function ImmersiveReader({ book }: { book: Book }) {
   const total = book.pages;
   const hasPages = optimizedBooks[book.slug] === total;
-  const emptyPages = new Set(blankSheets[book.slug] || []);
+  const emptyPages = useMemo(() => new Set(blankSheets[book.slug] || []), [book.slug]);
   const [page, setPage] = useState(1);
   const [inputPage, setInputPage] = useState("1");
   const [hydrated, setHydrated] = useState(false);
@@ -68,12 +68,14 @@ export default function ImmersiveReader({ book }: { book: Book }) {
 
   const turn = useCallback((direction: 1 | -1) => {
     changePage(nextReadable(page, direction, total, emptyPages));
-  }, [page, total, book.slug, changePage]);
+  }, [page, total, emptyPages, changePage]);
 
   useEffect(() => {
+    // Restore browser-only preferences after hydration; server markup stays stable.
     try {
       const saved = Number(localStorage.getItem(`read-${book.slug}`));
       if (Number.isFinite(saved) && saved > 0 && saved <= total) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPage(Math.floor(saved));
         setInputPage(String(Math.floor(saved)));
       }
@@ -112,7 +114,7 @@ export default function ImmersiveReader({ book }: { book: Book }) {
       const img = new Image();
       img.src = pageImage(book.slug, number);
     }
-  }, [page, total, hasPages, original, book.slug]);
+  }, [page, total, hasPages, original, book.slug, emptyPages]);
 
   useEffect(() => {
     function keyboard(event: KeyboardEvent) {

@@ -3,6 +3,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { getDb } from "../../../db";
 import { reviews } from "../../../db/schema";
 import { getBook } from "../../lib/books";
+import { isCrossOriginWrite, readBoundedJson } from "../../lib/request-security";
 export const runtime = "edge";
 export async function GET(request: NextRequest) {
   const slug = request.nextUrl.searchParams.get("book") ?? "";
@@ -11,8 +12,9 @@ export async function GET(request: NextRequest) {
   catch {return NextResponse.json({reviews:[],unavailable:true});}
 }
 export async function POST(request: NextRequest) {
-  let data:Record<string,unknown>;
-  try {data=await request.json() as Record<string,unknown>}catch{return NextResponse.json({error:"بيانات غير صالحة"},{status:400})}
+  if (isCrossOriginWrite(request)) return NextResponse.json({error:"طلب من مصدر غير موثوق"},{status:403});
+  const data = await readBoundedJson(request, 8192);
+  if (!data) return NextResponse.json({error:"بيانات غير صالحة أو كبيرة جدًا"},{status:400});
   if(data.website) return NextResponse.json({message:"استُلم الرأي للمراجعة"});
   const slug=String(data.bookSlug??"");const name=String(data.name??"").trim();const content=String(data.content??"").trim();const rating=Number(data.rating);
   if(!(await getBook(slug))||name.length<2||name.length>60||content.length<10||content.length>1200||!Number.isInteger(rating)||rating<1||rating>5) return NextResponse.json({error:"تحقق من الاسم والرأي والتقييم"},{status:400});

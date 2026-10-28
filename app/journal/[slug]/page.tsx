@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "../../components/NativeLink";
 import { ArrowRight, Feather } from "lucide-react";
 import { getPublishedArticle } from "../../lib/journal";
 

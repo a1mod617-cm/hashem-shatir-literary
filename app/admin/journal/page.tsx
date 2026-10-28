@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "../../components/NativeLink";
 import { checkAdmin } from "../../lib/admin";
 import JournalEditor from "../../components/JournalEditor";
 

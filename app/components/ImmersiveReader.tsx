@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import Link from "./NativeLink";
 import {
   ArrowRight, BookOpen, Check, ChevronLeft, ChevronRight, Download,
   ExternalLink, Maximize2, Minus, Moon, Plus, Settings2, Sun, X,

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "../components/NativeLink";
 import { LockKeyhole, BookOpen, MessageCircle, NotebookPen } from "lucide-react";
 import { checkAdmin } from "../lib/admin";
 import { chatGPTSignInPath } from "../chatgpt-auth";

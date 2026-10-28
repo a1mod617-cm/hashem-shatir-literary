@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Link from "next/link";
+import Link from "./NativeLink";
 import { Feather, Menu, X, BookOpen } from "lucide-react";
 const links = [{href:"/",label:"الرئيسية"},{href:"/#works",label:"المؤلفات"},{href:"/shelf",label:"مكتبتي"},{href:"/#about",label:"عن الكاتب"},{href:"/journal",label:"المدونة"},{href:"/#quotes",label:"اقتباسات"},{href:"/#contact",label:"تواصل"}];
 export default function Header() {

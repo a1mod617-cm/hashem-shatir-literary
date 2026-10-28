@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "./components/NativeLink";
 import { ArrowLeft, ArrowUpLeft, BookOpen, Feather, Camera as Instagram, Send, Sparkles, PenLine } from "lucide-react";
 import BookLibrary from "./components/BookLibrary";
 import QuoteExplorer from "./components/QuoteExplorer";

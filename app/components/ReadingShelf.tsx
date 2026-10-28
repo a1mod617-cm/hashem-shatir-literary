@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Link from "next/link";
+import Link from "./NativeLink";
 import { ArrowLeft, BookOpen, BookmarkCheck, CheckCircle2, RotateCcw, Sparkles } from "lucide-react";
 import { books as initialBooks, type Book } from "../data";
 import Book3D from "./Book3D";

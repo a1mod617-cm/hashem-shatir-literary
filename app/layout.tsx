@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "./components/NativeLink";
 import { Feather, Heart } from "lucide-react";
 import Header from "./components/Header";
 import ScrollExperience from "./components/ScrollExperience";

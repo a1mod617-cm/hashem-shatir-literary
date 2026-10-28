@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "../components/NativeLink";
 import { ArrowLeft } from "lucide-react";
 import { biography } from "../data";
 export const metadata: Metadata = {title:"عن الكاتب"};

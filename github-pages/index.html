@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0e0e0f">
+  <meta name="description" content="الموقع الرسمي للكاتب والروائي اليمني هاشم خالد شطير. اقرأ كتبه الأربعة مجانًا في قارئ مريح، وتابع إصداراته وأخباره.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="هاشم خالد شطير | المكتبة الرسمية">
+  <meta property="og:description" content="أربع حكايات وأربعة عوالم. اختر كتابك واقرأه الآن، من دون تسجيل حساب.">
+  <meta property="og:image" content="./media/la-tuhaddiq.jpg">
+  <title>هاشم خالد شطير | الكاتب والروائي</title>
+  <link rel="icon" href="./media/la-tuhaddiq.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#books">تجاوز إلى الكتب</a>
+  <header class="site-header" id="top">
+    <a class="wordmark" href="#home" aria-label="الصفحة الرئيسية"><span class="logo-icon">✒</span><span>هاشم خالد شطير<small>كاتب وروائي يمني</small></span></a>
+    <nav class="desktop-links" aria-label="القائمة الرئيسية">
+      <a href="#home">الرئيسية</a><a href="#books">المكتبة</a><a href="#about">عن الكاتب</a><a href="#quotes">اقتباسات</a><a href="#contact">تواصل</a>
+    </nav>
+    <div class="header-actions"><a class="small-button" href="#books">ابدأ القراءة <span aria-hidden="true">←</span></a><button id="menu-toggle" class="icon-button hamburger" type="button" aria-label="فتح القائمة" aria-expanded="false">☰</button></div>
+  </header>
+  <nav class="mobile-menu" id="mobile-menu" aria-label="قائمة الجوال" hidden>
+    <a href="#home">الرئيسية</a><a href="#books">المكتبة والكتب</a><a href="#about">عن الكاتب</a><a href="#quotes">اقتباسات</a><a href="#contact">تواصل</a>
+  </nav>
+
+  <main id="site-content">
+    <section class="hero section" id="home">
+      <div class="hero-light" aria-hidden="true"></div>
+      <div class="hero-content"><p class="eyebrow"><span class="gold-line"></span> الموقع الرسمي للكاتب والروائي</p>
+        <h1>لكلّ حكايةٍ <em>باب...</em><br>ولكلّ روحٍ <em>كتاب.</em></h1>
+        <p class="hero-description">أهلًا بك في عالم هاشم خالد شطير، حيث تُكتب الحكايات لتبقى، وتُفتح صفحات الكتب لتأخذك إلى أماكن لم تزرها من قبل.</p>
+        <div class="hero-buttons"><a class="primary-button" href="#books">اكتشف المكتبة <span>←</span></a><a class="secondary-button" href="#about">تعرّف على الكاتب</a></div>
+        <div class="hero-stat"><span><strong>04</strong> كتب وإصدارات</span><i></i><span><strong>656</strong> صفحة للقراءة</span><i></i><span>قراءة <strong>مجانية</strong></span></div>
+      </div>
+      <div class="hero-books" aria-hidden="true"><div class="hero-cover hero-cover-back" style="background-image:url('./media/warith.jpg')"></div><div class="hero-cover hero-cover-front" style="background-image:url('./media/la-tuhaddiq.jpg')"></div><div class="hero-glow"></div></div>
+      <a class="scroll-hint" href="#books">تصفّح المكتبة <span>↓</span></a>
+    </section>
+
+    <section class="section library" id="books">
+      <div class="section-heading"><div><p class="eyebrow">المكتبة الأدبية</p><h2>اختر حكايتك <span>القادمة</span></h2><p class="muted">اضغط على غلاف الكتاب أو زر «اقرأ الآن» للدخول مباشرة إلى القارئ.</p></div><div class="library-count">04 <span>إصدارات</span></div></div>
+      <div class="library-toolbar"><label class="search-wrap"><span aria-hidden="true">⌕</span><input type="search" id="book-search" placeholder="ابحث عن كتاب أو نوع أدبي..." autocomplete="off" aria-label="البحث في المكتبة"></label><div class="filters" id="filters"><button class="filter active" data-filter="all" type="button">الكل</button><button class="filter" data-filter="رواية" type="button">روايات</button><button class="filter" data-filter="كتاب" type="button">كتب وخواطر</button></div></div>
+      <div class="book-grid" id="book-grid" aria-live="polite"></div>
+      <div class="no-results" id="no-results" hidden>لم نجد كتابًا بهذا الاسم. جرّب بحثًا آخر.</div>
+    </section>
+
+    <section class="section about-section" id="about"><div class="about-frame"><p class="eyebrow">وراء الكلمات</p><h2>هاشم خالد شطير</h2><p class="about-lead">كاتب وروائي يمني، يرى في الكتابة مساحة لفهم الإنسان وأسراره، وفي الحكايات طريقًا للوصول إلى ما تعجز الكلمات اليومية عن قوله.</p><p>تخرّج في كلية الصيدلة، لكن شغفه بالقراءة والأدب ظلّ رفيقًا له. تتنوّع أعماله بين الرعب والغموض، والفانتازيا، والخواطر، والتأملات الإنسانية. يحمل كل عمل عالمًا خاصًا، ويترك للقارئ مساحة يجد فيها شيئًا من نفسه بين السطور.</p><p class="about-quote">«بعض الحكايات لا تنتهي حين نصل إلى آخر صفحاتها.»</p><a href="https://www.instagram.com/7wa_h9/" target="_blank" rel="noopener noreferrer" class="secondary-button">تابع الكاتب على إنستغرام ↗</a></div></section>
+
+    <section class="section quotes-section" id="quotes"><div class="section-heading"><div><p class="eyebrow">من بين السطور</p><h2>كلماتٌ <span>تبقى</span></h2></div></div><div class="quotes-grid"><blockquote>«ليس الفقد أن يرحل أحدهم عن حياتك، بل أن تبقى الأشياء كما هي، ولا تعود أنت كما كنت.»<cite>عن الحب والفقد</cite></blockquote><blockquote>«بعض الحكايات لا تُكتب لتُروى، بل لتجد روحًا أخرى تشبهها.»<cite>عن الكتابة والحكايات</cite></blockquote><blockquote>«ليس عليك أن ترى نهاية الطريق كي تواصل السير؛ يكفي أحيانًا أن تعرف أن الوقوف لن يغيّر شيئًا.»<cite>عن الأمل والإيمان</cite></blockquote></div></section>
+
+    <section class="section closing" id="contact"><div><p class="eyebrow">ابقَ قريبًا من الحكاية</p><h2>رحلتنا مع الكلمات <span>لم تنتهِ بعد.</span></h2><p>للاستفسارات، ومتابعة جديد الإصدارات، والتواصل مع الكاتب:</p><div class="social-links"><a href="https://www.instagram.com/7wa_h9/" target="_blank" rel="noopener noreferrer">إنستغرام ↗</a><a href="https://t.me/H7wa_ha" target="_blank" rel="noopener noreferrer">تلغرام ↗</a></div></div></section>
+  </main>
+
+  <footer class="footer"><div><span class="footer-name">✒ هاشم خالد شطير</span><p>هنا تبدأ الحكايات... وقد لا تنتهي.</p></div><a href="#top">العودة للأعلى ↑</a><small>© <span id="year"></span> جميع الحقوق محفوظة للكاتب.</small></footer>
+
+  <div class="reader" id="reader" hidden role="dialog" aria-modal="true" aria-label="قارئ الكتب">
+    <div class="reader-header"><button id="close-reader" type="button" class="reader-back" aria-label="العودة للمكتبة">✕ <span>المكتبة</span></button><div class="reader-book-title"><strong id="reader-title"></strong><small id="reader-subtitle"></small></div><a id="download-book" class="reader-download" href="#" download aria-label="تنزيل الكتاب بصيغة PDF">↓ <span>تحميل PDF</span></a></div>
+    <div class="reader-stage" id="reader-stage"><div class="page-loader" id="page-loader" role="status">جاري فتح الصفحة…</div><img id="page-image" draggable="false" alt="" decoding="async"><div class="page-error" id="page-error" hidden><p>تعذّر عرض هذه الصفحة. يمكنك إعادة المحاولة أو قراءة ملف PDF مباشرة.</p><button id="retry-page" type="button" class="primary-button">إعادة المحاولة</button><a id="reader-pdf-fallback" class="secondary-button" href="#" target="_blank" rel="noopener">فتح PDF</a></div><button class="tap-arrow tap-next" id="next-tap" type="button" aria-label="الصفحة التالية">‹</button><button class="tap-arrow tap-prev" id="prev-tap" type="button" aria-label="الصفحة السابقة">›</button></div>
+    <div class="reader-controls"><div class="reader-primary-controls"><button id="prev-page" type="button" aria-label="الصفحة السابقة">→ <span>السابقة</span></button><span class="page-status" aria-live="polite"><span id="current-page">1</span> <span class="of">/</span> <span id="total-pages">1</span></span><button id="next-page" type="button" aria-label="الصفحة التالية"><span>التالية</span> ←</button></div><div class="reader-secondary-controls"><button id="zoom-out" type="button" aria-label="تصغير الصفحة">−</button><span id="zoom-label" aria-live="polite">100%</span><button id="zoom-in" type="button" aria-label="تكبير الصفحة">+</button><button id="zoom-reset" type="button">ملاءمة</button><button id="fullscreen-reader" type="button" aria-label="ملء الشاشة">⛶</button></div><label class="page-jump">صفحة <input id="jump-page" type="number" min="1" inputmode="numeric" aria-label="الانتقال إلى صفحة"></label></div>
+    <div class="reader-hint" id="reader-hint">اسحب لليمين للصفحة التالية، ولليسار للسابقة · يُحفظ موضع القراءة تلقائيًا</div>
+  </div>
+</body>
+</html>

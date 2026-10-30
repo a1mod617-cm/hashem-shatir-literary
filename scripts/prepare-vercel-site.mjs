@@ -1,7 +1,7 @@
 // Prepare the already-published, self-contained book site for Vercel.
 // GitHub remains the source of truth; this does not modify the source files.
 import { execFileSync } from 'node:child_process';
-import { rm, stat } from 'node:fs/promises';
+import { rm, stat, copyFile } from 'node:fs/promises';
 
 const output = 'vercel-static-output';
 const repository = 'https://github.com/a1mod617-cm/hashem-shatir-literary.git';
@@ -11,6 +11,11 @@ execFileSync('git', ['clone', '--depth', '1', '--single-branch', '--branch', 'po
 });
 
 await rm(`${output}/.git`, { recursive: true, force: true });
+// Vercel always serves the latest authored interface from main, even while
+// the mirror's heavyweight 656-page rendering workflow is still catching up.
+for (const name of ['index.html', 'style.css', 'app.js']) {
+  await copyFile(`github-pages/${name}`, `${output}/${name}`);
+}
 
 for (const required of [
   'index.html',

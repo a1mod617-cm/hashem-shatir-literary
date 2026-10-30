@@ -27,10 +27,11 @@ function renderBooks(){
   for(const book of books){
     const card=document.createElement('article');card.className='book-card';
     const saved=getSaved(book);
-    card.innerHTML=`<button type="button" class="cover-click" aria-label="قراءة كتاب ${book.title}"><img src="${media(book.cover)}" alt="غلاف كتاب ${book.title}" loading="lazy"></button><div class="book-card-content"><span class="genre-badge">${book.genre}</span><h3>${book.title}</h3><p class="book-card-description">${book.desc}</p><div class="book-meta"><span>${book.year}</span><span>•</span><span>${book.pages} صفحة</span></div><div class="book-actions"><button type="button" class="read-button">${saved>1?'متابعة القراءة':'اقرأ الآن'} ←</button><a class="pdf-link" href="${pdf(book)}" download="${book.slug}.pdf" aria-label="تحميل كتاب ${book.title}">PDF ↓</a></div>${saved>1?`<small class="continue-label">تابع من الصفحة ${saved}</small>`:''}</div>`;
+    card.innerHTML=`<button type="button" class="cover-click" aria-label="قراءة كتاب ${book.title}"><span class="book-3d"><span class="book-spine" aria-hidden="true"></span><img src="${media(book.cover)}" alt="غلاف كتاب ${book.title}" loading="lazy"></span></button><div class="book-card-content"><span class="genre-badge">${book.genre}</span><h3>${book.title}</h3><p class="book-card-description">${book.desc}</p><div class="book-meta"><span>${book.year}</span><span>•</span><span>${book.pages} صفحة</span></div><div class="book-actions"><button type="button" class="read-button">${saved>1?'متابعة القراءة':'اقرأ الآن'} ←</button><a class="pdf-link" href="${pdf(book)}" download="${book.slug}.pdf" aria-label="تحميل كتاب ${book.title}">PDF ↓</a></div>${saved>1?`<small class="continue-label">تابع من الصفحة ${saved}</small>`:''}</div>`;
     card.querySelector('.cover-click').addEventListener('click',()=>openBook(book));
     card.querySelector('.read-button').addEventListener('click',()=>openBook(book));
     $('book-grid').append(card);
+    enhanceBookCard(card);
   }
 }
 function openBook(book){location.hash=`read/${book.slug}/${normalizePage(book,getSaved(book))}`}
@@ -76,6 +77,7 @@ function loadPage(book,page){
     if(token!==state.loadToken)return;
     img.src=temp.src;img.alt=`${book.title} — صفحة ${page} من ${book.pages}`;
     img.classList.remove('loading');loader.hidden=true;
+    img.classList.remove('page-turn');void img.offsetWidth;img.classList.add('page-turn');
     $('reader-stage').scrollTo({top:0,left:0,behavior:'instant'});
     prefetchNearby(book,page);
   };
@@ -153,3 +155,36 @@ document.addEventListener('DOMContentLoaded',()=>{
   window.addEventListener('resize',()=>{if(state.book)updateZoom()});
   renderRoute();
 });
+
+/* Book-object depth and subtle reader interactions — lightweight, no external dependencies. */
+function enhanceBookCard(card){
+  const button=card.querySelector('.cover-click');
+  const object=card.querySelector('.book-3d');
+  if(!button||!object||!window.matchMedia('(hover: hover) and (pointer: fine)').matches)return;
+  button.addEventListener('pointermove',event=>{
+    const rect=button.getBoundingClientRect();
+    const x=(event.clientX-rect.left)/rect.width-.5;
+    const y=(event.clientY-rect.top)/rect.height-.5;
+    object.style.setProperty('--tilt-y',(x*20).toFixed(1)+'deg');
+    object.style.setProperty('--tilt-x',(-y*11).toFixed(1)+'deg');
+  },{passive:true});
+  button.addEventListener('pointerleave',()=>{
+    object.style.removeProperty('--tilt-y');
+    object.style.removeProperty('--tilt-x');
+  });
+}
+(function initScrollAccent(){
+  const bar=document.getElementById('scroll-progress');
+  if(!bar)return;
+  let pending=false;
+  function update(){
+    const max=document.documentElement.scrollHeight-window.innerHeight;
+    bar.style.transform='scaleX('+(max>0?Math.min(1,Math.max(0,window.scrollY/max)):0)+')';
+    pending=false;
+  }
+  window.addEventListener('scroll',()=>{
+    if(!pending){pending=true;requestAnimationFrame(update)}
+  },{passive:true});
+  window.addEventListener('resize',update,{passive:true});
+  update();
+})();

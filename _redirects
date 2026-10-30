@@ -1,0 +1,4 @@
+# Temporary fallback while Cloudflare production branch is main.
+# Switch Cloudflare Pages production branch to portable-site to publish the full site directly.
+/ https://portable-site.hashem-shatir-literary.pages.dev/ 302
+/* https://portable-site.hashem-shatir-literary.pages.dev/:splat 302

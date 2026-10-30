@@ -50,6 +50,7 @@ function renderBooks(){
  }
 }
 
+let currentPreview=null;
 function openPreview(book){
  currentPreview=book;
  $('preview-title').textContent=book.title;

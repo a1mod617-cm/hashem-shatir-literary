@@ -29,6 +29,8 @@ function make3DBook(book,variant="card",back=null){
  return `<div class="book3d book3d--${variant}" style="--book-edge:${colors[book.slug]||"#9f805b"}" aria-label="كتاب ${book.title} بمظهر ثلاثي الأبعاد"><div class="book3d-volume"><span class="book3d-edge book3d-edge--spine" aria-hidden="true"></span><span class="book3d-edge book3d-edge--pages" aria-hidden="true"></span><span class="book3d-edge book3d-edge--top" aria-hidden="true"></span><span class="book3d-edge book3d-edge--bottom" aria-hidden="true"></span><div class="book3d-back" aria-hidden="true"><img src="${media(back||backs[book.slug]||book.cover)}" alt="" loading="lazy"></div><img class="book3d-front" src="${media(book.cover)}" alt="غلاف ${book.title}" loading="lazy"><span class="book3d-light" aria-hidden="true"></span></div><span class="book3d-floor" aria-hidden="true"></span></div>`;
 }
 
+const BOOK_ICON_SVG="<svg class=\"site-icon\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 7v14\"/><path d=\"M3 18V5a2 2 0 0 1 2-2h2a5 5 0 0 1 5 5 5 5 0 0 1 5-5h2a2 2 0 0 1 2 2v13\"/><path d=\"M3 18h4a5 5 0 0 1 5 3 5 5 0 0 1 5-3h4\"/></svg>";
+const EYE_ICON_SVG="<svg class=\"site-icon\" width=\"19\" height=\"19\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z\"/><circle cx=\"12\" cy=\"12\" r=\"3\"/></svg>";
 function renderBooks(){
  const books=BOOKS.filter(book=>{
   const matches=state.filter==='all'||(state.filter==='رواية'?book.type==='رواية':book.type!=='رواية');
@@ -38,7 +40,7 @@ function renderBooks(){
  for(const book of books){
   const index=BOOKS.findIndex(item=>item.slug===book.slug),saved=getSaved(book);
   const card=document.createElement('article');card.className='book-card';
-  card.innerHTML=`<div class="book-image"><a href="#read/${book.slug}/${saved}" class="book-cover-link" aria-label="افتح كتاب ${book.title} للقراءة مباشرة">${make3DBook(book)}<span class="book-category">${book.genre}</span><span class="book-hover">▣ افتح الكتاب واقرأ ←</span></a><div class="book-reflection" aria-hidden="true"></div></div><div class="book-info"><span class="book-index">${String(index+1).padStart(2,"0")} / ${book.year}</span><h3><a href="#read/${book.slug}/${saved}">${book.title}</a></h3><p>${book.subtitle||book.type} · ${book.pages} صفحة</p><a class="book-read-direct" href="#read/${book.slug}/${saved}">▣ ${saved>1?'متابعة القراءة':'افتح الكتاب للقراءة'} ←</a><button class="book-arrow" type="button" aria-label="نبذة عن ${book.title}" title="نبذة وتفاصيل">◉</button></div>`;
+  card.innerHTML=`<div class="book-image"><a href="#read/${book.slug}/${saved}" class="book-cover-link" aria-label="افتح كتاب ${book.title} للقراءة مباشرة">${make3DBook(book)}<span class="book-category">${book.genre}</span><span class="book-hover">${BOOK_ICON_SVG} افتح الكتاب واقرأ ←</span></a><div class="book-reflection" aria-hidden="true"></div></div><div class="book-info"><span class="book-index">${String(index+1).padStart(2,"0")} / ${book.year}</span><h3><a href="#read/${book.slug}/${saved}">${book.title}</a></h3><p>${book.subtitle||book.type} · ${book.pages} صفحة</p><a class="book-read-direct" href="#read/${book.slug}/${saved}">${BOOK_ICON_SVG} ${saved>1?'متابعة القراءة':'افتح الكتاب للقراءة'} ←</a><button class="book-arrow" type="button" aria-label="نبذة عن ${book.title}" title="نبذة وتفاصيل">${EYE_ICON_SVG}</button></div>`;
   card.querySelector('.book-arrow').addEventListener('click',()=>openPreview(book));
   card.querySelector('.book-cover-link').addEventListener('pointermove',event=>{
    if(event.pointerType==='touch'||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
@@ -83,7 +85,7 @@ function renderQuotes(){
  }
  $('next-quote').addEventListener('click',()=>{index=(index+1)%QUOTE_ITEMS.filter(q=>q.category===category).length;paint()});
  $('prev-quote').addEventListener('click',()=>{index=(index-1+QUOTE_ITEMS.filter(q=>q.category===category).length)%QUOTE_ITEMS.filter(q=>q.category===category).length;paint()});
- $('copy-quote').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(`${$('quote-text').textContent} — هاشم خالد شطير`);$('copy-quote').textContent='✓';setTimeout(()=>{$('copy-quote').textContent='▣'},1200)}catch{$('copy-quote').textContent='حدد النص لنسخه'}});
+ $('copy-quote').addEventListener('click',async()=>{const normalIcon=$('copy-quote').innerHTML;try{await navigator.clipboard.writeText(`${$('quote-text').textContent} — هاشم خالد شطير`);$('copy-quote').textContent='✓';setTimeout(()=>{$('copy-quote').innerHTML=normalIcon},1200)}catch{$('copy-quote').textContent='حدد النص لنسخه'}});
  paint();
 }
 

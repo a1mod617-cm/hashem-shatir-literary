@@ -12,6 +12,7 @@ await rm(dist,{recursive:true,force:true});
 await mkdir(dist,{recursive:true});
 for(const name of ['index.html','style.css','app.js'])await cp(resolve(root,'github-pages',name),resolve(dist,name));
 for(const dir of ['books','media','pages'])await cp(resolve(root,'public',dir),resolve(dist,dir),{recursive:true});
+await cp(resolve(root,'public','favicon.svg'),resolve(dist,'favicon.svg'));
 for(const [slug,expected] of Object.entries(counts)){
   const list=(await readdir(resolve(dist,'pages',slug))).filter(x=>/^\d{3}\.webp$/.test(x));
   if(list.length!==expected)throw Error(`${slug}: expected ${expected} pages, found ${list.length}. Render first.`);

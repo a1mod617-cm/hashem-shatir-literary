@@ -66,7 +66,7 @@ export const books: Book[] = [
     genre: "فانتازيا",
     year: "2026",
     pages: 218,
-    cover: "/media/warith.jpg",
+    cover: "/media/warith-2026.jpg",
     gallery: [{src:"/media/warith-back.jpg",label:"خريطة عالم الرواية"}],
     pdf: "/books/warith-al-ahd.pdf",
     color: "#6d6255",

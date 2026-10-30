@@ -615,3 +615,103 @@ a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #f0ce
 }
 @media(max-width:390px){.book-image{height:211px}.book-card{border-radius:17px}.book-info h3{font-size:21px}.book-index,.book-year{font-size:9px}.book-info{min-height:203px}.book-actions{gap:2px}.book-read-direct .action-arrow{font-size:14px}.book-info .book-read-direct{font-size:10px}}
 @media(prefers-reduced-motion:reduce){.book-card,.book-hover,.book-read-direct .action-arrow,.social-buttons a{transition:none!important}.book-card:hover{transform:none!important}}
+
+
+
+/* Edition themes — classic dark ink and warm daytime paper.
+   Light mode preserves the editorial composition and original book artwork. */
+html{color-scheme:dark}
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:9px;flex:none;
+  padding:10px 15px;min-height:43px;border:1px solid rgba(221,189,140,.46);border-radius:999px;
+  color:#ebd1aa;background:rgba(202,164,108,.10);font-size:12px;font-weight:700;
+  transition:transform .2s ease,background .2s ease,color .2s ease,border-color .2s ease}
+.theme-toggle:hover{transform:translateY(-2px);background:rgba(214,178,123,.20);border-color:rgba(234,199,143,.78)}
+.theme-icon{display:none;flex:none}.theme-sun,.theme-label-light{display:block}
+.theme-label-dark{display:none}
+html[data-theme=light]{color-scheme:light;--ink:#f7f3eb;--ink2:#f0e9de;--ink3:#e7dacc;--cream:#29231e;--text:#29231e;--soft:#675b4f;--muted:#675b4f;--gold:#886239;--gold-light:#946d41;--gold2:#946d41;--line:rgba(98,72,41,.21);--border:rgba(98,72,41,.21);--editorial-edge:rgba(98,72,41,.23);--paper-gold:#916c3d}
+html[data-theme=light] body{color:#29231e;background:#f7f3eb}
+html[data-theme=light] .theme-toggle{background:#efe4d4;border-color:#a78d6c;color:#4e3725}
+html[data-theme=light] .theme-sun,html[data-theme=light] .theme-label-light{display:none}
+html[data-theme=light] .theme-moon,html[data-theme=light] .theme-label-dark{display:block}
+html[data-theme=light] .site-header{background:rgba(250,246,238,.94);border-color:#cabda9;box-shadow:0 10px 28px #51423112}
+html[data-theme=light] .brand,html[data-theme=light] .nav-links a,html[data-theme=light] .nav-reading{color:#36291c}
+html[data-theme=light] .brand small{color:#7d6c5d}
+html[data-theme=light] .brand-icon{color:#926b3d;background:#e4d7c3;border-color:#b89b76}
+html[data-theme=light] .nav-reading{background:#f1e6d8;border-color:#bba17f}
+html[data-theme=light] .menu-toggle{color:#553e29;background:#e9dccc;border-color:#c3a784}
+html[data-theme=light] .hero{background:radial-gradient(ellipse at 16% 44%,#e5d5be,transparent 49%),radial-gradient(ellipse at 88% 14%,#f2e1c8,transparent 50%),#f7f3eb}
+html[data-theme=light] .hero::before{opacity:.16}
+html[data-theme=light] .hero h1{color:#31251d}
+html[data-theme=light] .hero-copy .eyebrow,html[data-theme=light] .eyebrow{color:#90663b}
+html[data-theme=light] .hero-lead,html[data-theme=light] .hero-note{color:#625346}
+html[data-theme=light] .hero-note{border-right-color:#b08a5e}
+html[data-theme=light] .hero-orbit{border-color:#b8997357}
+html[data-theme=light] .portrait-caption,html[data-theme=light] .portrait-number,html[data-theme=light] .scroll-hint{color:#7d664e}
+html[data-theme=light] .marquee-separator{background:#e9e0d2;color:#7c5d3a;border-color:#cdbda8}
+html[data-theme=light] .works-section{background:#f3ede2}
+html[data-theme=light] .section-heading h2,html[data-theme=light] .feature-copy h2,html[data-theme=light] .about-copy h2,html[data-theme=light] .connect-inner h2{color:#35271e}
+html[data-theme=light] .section-heading p,html[data-theme=light] .feature-copy p,html[data-theme=light] .about-copy p,html[data-theme=light] .connect-inner p{color:#6b5d50}
+html[data-theme=light] .filter-tabs button{background:#fffaf1;color:#5e4b37;border-color:#c6b398}
+html[data-theme=light] .filter-tabs button.active,html[data-theme=light] .filter-tabs button:hover{background:#9f774c!important;color:#fffaf0!important;border-color:#9f774c!important}
+html[data-theme=light] .book-search{background:#fffaf2;border-color:#c7b49c}
+html[data-theme=light] .book-search:focus-within{background:#fff;border-color:#9f774c}
+html[data-theme=light] .book-search input{color:#2c261d}
+html[data-theme=light] .book-search input::placeholder{color:#867766}
+html[data-theme=light] .book-card{background:linear-gradient(145deg,#fffdf8,#f8f1e6 75%);border-color:#c6b392;box-shadow:0 14px 32px #68553816}
+html[data-theme=light] .book-card:hover{border-color:#a77d4a;box-shadow:0 24px 48px #68553823}
+html[data-theme=light] .book-image{background:radial-gradient(ellipse at 45% 32%,#e6d2b5,#e5dccf 62%,#d8c8b1);border-color:#dccdb8}
+html[data-theme=light] .book-image::after{background:linear-gradient(0deg,#36291c52,transparent 42%)}
+html[data-theme=light] .book-kicker{border-color:#d5c4ab}
+html[data-theme=light] .book-index,html[data-theme=light] .book-year,html[data-theme=light] .book-info p{color:#736454}
+html[data-theme=light] .book-info h3,html[data-theme=light] .book-info h3 a{color:#35281e}
+html[data-theme=light] .book-info h3 a:hover{color:#956736}
+html[data-theme=light] .book-info .book-read-direct{background:#a6815520;color:#75502b;border-color:#ae8d67}
+html[data-theme=light] .book-info .book-read-direct:hover{background:#a57c4b;color:#fffaf1}
+html[data-theme=light] .book-card .book-arrow,html[data-theme=light] .book-card:hover .book-arrow{color:#694c2e;background:#e5d9c79e;border-color:#d1bca1}
+html[data-theme=light] .feature-story{background:radial-gradient(ellipse at 32% 43%,#ddc9af,transparent 60%),linear-gradient(135deg,#f5ecdf,#efe7db);border-color:#cdb89c}
+html[data-theme=light] .feature-meta span{color:#76624c}
+html[data-theme=light] .about-section{background:#f9f5ed}
+html[data-theme=light] .about-art::before{border-color:#bc9d72}
+html[data-theme=light] .text-link{color:#875c31}
+html[data-theme=light] .quotes-section{background:#f2eadf}
+html[data-theme=light] .quote-categories button{background:#faf5ec;border-color:#b9a68e;color:#675240}
+html[data-theme=light] .quote-categories button.active,html[data-theme=light] .quote-categories button:hover{background:#a27b4a;color:#fff8ee;border-color:#a27b4a}
+html[data-theme=light] .quote-panel{background:radial-gradient(ellipse at 50% 10%,#ead6bb,transparent 60%),linear-gradient(155deg,#fffdfa,#f3eadd);border-color:#c5aa85;box-shadow:0 16px 40px #7c60451a}
+html[data-theme=light] .quote-panel-inner p,html[data-theme=light] .quote-author{color:#392a1e}
+html[data-theme=light] .quote-mark{color:#c8ac84}
+html[data-theme=light] .quote-controls button{background:#fff9ee;color:#76552f;border-color:#c6ae8a}
+html[data-theme=light] .quote-count{color:#806b50}
+html[data-theme=light] .journal-home-banner{background:linear-gradient(115deg,#e9daca,#f7eee3 55%,#ecdfcf);border-color:#c7b49c}
+html[data-theme=light] .journal-home-inner h2,html[data-theme=light] .journal-home-inner p{color:#443426}
+html[data-theme=light] .connect-section{background:radial-gradient(circle at 50% 100%,#ebd8bb,#f7f3eb 73%);border-color:#c7b49c}
+html[data-theme=light] .social-buttons a{background:#fff9f0;color:#553e29;border-color:#b69c7b}
+html[data-theme=light] .social-buttons a:hover{background:#a67c4d;color:#fffaf0}
+html[data-theme=light] .site-footer{background:#eae0d2;color:#4a3928;border-color:#c5ad8c}
+html[data-theme=light] .footer-brand,html[data-theme=light] .footer-inner p,html[data-theme=light] .footer-copy{color:#594532}
+html[data-theme=light] .btn-outline{background:#fff9ee;color:#5c4128;border-color:#bba181}
+html[data-theme=light] .btn-outline:hover{background:#ecdeca}
+html[data-theme=light] .page-top,html[data-theme=light] .journal-page-hero,html[data-theme=light] .shelf-hero{background:radial-gradient(ellipse at 70% 18%,#e9d7bd,#f4ebdf 70%)}
+html[data-theme=light] .page-top h1,html[data-theme=light] .page-top p,html[data-theme=light] .back-link{color:#453324}
+html[data-theme=light] .content-section{background:#f8f4ec}
+html[data-theme=light] .shelf-copy h2,html[data-theme=light] .shelf-copy p,html[data-theme=light] .shelf-progress-caption{color:#5a4430}
+html[data-theme=light] .shelf-progress-track{background:#dbccbb}
+html[data-theme=light] .bio-prose,html[data-theme=light] .journal-empty p,html[data-theme=light] .journal-footnote{color:#5a4939}
+html[data-theme=light] .quick-view-panel{background:linear-gradient(135deg,#fdf9f1,#f3e7d6);border-color:#bda27f;box-shadow:0 32px 95px #30241966}
+html[data-theme=light] .quick-view-copy h2,html[data-theme=light] .quick-view-subtitle,html[data-theme=light] .quick-view-description,html[data-theme=light] .quick-view-pages,html[data-theme=light] .quick-view-meta{color:#463524}
+html[data-theme=light] .quick-view-meta span{color:#5f462c;background:#efe0c9;border-color:#c6ae8c}
+html[data-theme=light] .quick-view-close{color:#f6e7d2}
+html[data-theme=light] .reader{background:#eee6db;color:#382c20}
+html[data-theme=light] .reader-header,html[data-theme=light] .reader-controls{background:#faf5ed;border-color:#cbb69b}
+html[data-theme=light] .reader-stage{background:radial-gradient(circle,#e3d4bd,#eee7dc 72%)}
+html[data-theme=light] .reader-back,html[data-theme=light] .reader-download,html[data-theme=light] .reader-controls button,html[data-theme=light] .page-jump input{color:#654a2c;background:#fffaf1;border-color:#c9b293}
+html[data-theme=light] .reader-book-title small,html[data-theme=light] .page-status,html[data-theme=light] .reader-hint{color:#76614e}
+html[data-theme=light] .reader-hint{background:#faf5ed}
+html[data-theme=light] .tap-arrow{color:#785c3f;background:#f9eeddaf}
+@media(max-width:760px){
+ .nav-inner{gap:8px}
+ .theme-toggle{min-width:42px;width:42px;height:42px;padding:0}
+ .theme-label{display:none!important}
+ html[data-theme=light] .nav-links{background:#faf6ee}
+ html[data-theme=dark] .nav-links{background:#101113}
+}
+@media(prefers-reduced-motion:reduce){.theme-toggle{transition:none}}

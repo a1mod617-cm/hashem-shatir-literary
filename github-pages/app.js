@@ -4,7 +4,7 @@ const BOOKS = [
   {slug:'la-tuhaddiq-kathiran',title:'لا تحدّق كثيرًا',type:'رواية',genre:'رعب وغموض',year:'2025',pages:153,cover:'la-tuhaddiq.jpg',desc:'رواية تصحب القارئ إلى أجواء الرعب والغموض، حيث تتقاطع الأسئلة المخيفة مع خبايا النفس الإنسانية.',skip:[4,6,8,30,40,66,98,104,138]},
   {slug:'haribini-bisharaf',title:'حاربيني بشرف',type:'كتاب',genre:'الحياة والإنسان',year:'2023',pages:173,cover:'haribini.jpg',desc:'كتاب عن الحياة، يتأمل التجارب والمواقف الإنسانية وما تتركه في النفس من أثر ومعرفة ونضج.',skip:[]},
   {slug:'12-12',title:'12:12',subtitle:'كل شيء جميل عندما ننظر إليه بحب',type:'كتاب خواطر',genre:'خواطر وتأملات',year:'2024',pages:112,cover:'12-12.jpg',desc:'خواطر تتأمل جمال الحياة حين ننظر إليها بمحبة، وتمنح المشاعر الصغيرة صوتًا بين السطور.',skip:[4]},
-  {slug:'warith-al-ahd',title:'وريث العهد',type:'رواية',genre:'فانتازيا',year:'2026',pages:218,cover:'warith.jpg',desc:'عالم من الفانتازيا والصراعات والأسرار، تتشابك فيه الأقدار مع العهود وتُختبر إرادة الإنسان أمام ما كُتب له وما يختار أن يكونه.',skip:[4,6,10]}
+  {slug:'warith-al-ahd',title:'وريث العهد',type:'رواية',genre:'فانتازيا',year:'2026',pages:218,cover:'warith-2026.jpg',desc:'عالم من الفانتازيا والصراعات والأسرار، تتشابك فيه الأقدار مع العهود وتُختبر إرادة الإنسان أمام ما كُتب له وما يختار أن يكونه.',skip:[4,6,10]}
 ];
 const $ = (id)=>document.getElementById(id);
 const state = {book:null,page:1,zoom:1,filter:'all',query:'',loadToken:0,touchX:0,touchY:0,touchTime:0};
@@ -187,7 +187,30 @@ function closeMenu(){$('mobile-menu').classList.remove('open');$('menu-toggle').
 
 
 
+
+// Visitor theme preference: readable day/night palette, saved only on this device.
+function applyTheme(mode){
+  const theme=mode==='light'?'light':'dark';
+  document.documentElement.dataset.theme=theme;
+  const action=theme==='light'?'تفعيل الوضع الليلي':'تفعيل الوضع النهاري';
+  const button=$('theme-toggle');
+  if(button){
+    button.setAttribute('aria-label',action);
+    button.setAttribute('title',action);
+    button.setAttribute('aria-pressed',String(theme==='light'));
+  }
+  const chromeColor=document.querySelector('meta[name="theme-color"]');
+  if(chromeColor)chromeColor.setAttribute('content',theme==='light'?'#f5f0e8':'#0c0d0f');
+}
+function toggleTheme(){
+  const next=document.documentElement.dataset.theme==='light'?'dark':'light';
+  applyTheme(next);
+  try{localStorage.setItem('hashem-site-theme-v1',next)}catch(_){}
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
+  applyTheme(document.documentElement.dataset.theme);
+  $('theme-toggle').addEventListener('click',toggleTheme);
  $('year').textContent=new Date().getFullYear();renderBooks();renderQuotes();renderBio();
  $('book-search').addEventListener('input',event=>{state.query=event.target.value.trim();renderBooks()});
  for(const button of $('filters').querySelectorAll('[data-filter]'))button.addEventListener('click',()=>{

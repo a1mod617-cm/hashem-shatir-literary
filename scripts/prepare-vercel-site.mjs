@@ -17,6 +17,10 @@ for (const name of ['index.html', 'style.css', 'app.js']) {
   await copyFile(`github-pages/${name}`, `${output}/${name}`);
 }
 
+// The latest approved cover is sourced directly from main so it reaches Vercel
+// without waiting for the large reader-pages mirror branch.
+await copyFile('public/media/warith-2026.jpg', `${output}/media/warith-2026.jpg`);
+
 // Serve branded discovery assets from the same public Vercel origin.
 await copyFile('public/favicon.svg', `${output}/favicon.svg`);
 await writeFile(`${output}/robots.txt`, `User-agent: *\nAllow: /\nSitemap: https://hashem-shatir-literary-a1mod617-cm.vercel.app/sitemap.xml\n`);

@@ -1,0 +1,63 @@
+name: Prepare standalone mirror for independent hosting
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-mirror.yml'
+      - 'github-pages/**'
+      - 'scripts/build-gh-pages.mjs'
+      - 'scripts/render-book-pages.py'
+      - 'public/books/**'
+      - 'public/media/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: portable-site-mirror
+  cancel-in-progress: true
+
+jobs:
+  create-portable-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out original source
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install faithful PDF rendering dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y poppler-utils
+          python -m pip install Pillow
+      - name: Render all 656 pages
+        run: python scripts/render-book-pages.py
+      - name: Build portable static website
+        run: node scripts/build-gh-pages.mjs
+      - name: Verify portable site contents
+        run: |
+          test -f gh-pages-dist/index.html
+          test -f gh-pages-dist/app.js
+          test -f gh-pages-dist/style.css
+          test -f gh-pages-dist/books/12-12.pdf
+          test -f gh-pages-dist/pages/warith-al-ahd/218.webp
+      - name: Publish complete self-contained site to portable-site branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd gh-pages-dist
+          git init -b portable-site
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m "Publish standalone author website from ${GITHUB_SHA}"
+          gh auth setup-git
+          git push --force "https://github.com/${GITHUB_REPOSITORY}.git" HEAD:refs/heads/portable-site

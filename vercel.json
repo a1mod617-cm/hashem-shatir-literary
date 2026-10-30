@@ -1,0 +1,7 @@
+{
+  "version": 2,
+  "framework": null,
+  "installCommand": "echo Static site - no dependencies to install",
+  "buildCommand": "node scripts/prepare-vercel-site.mjs",
+  "outputDirectory": "vercel-static-output"
+}

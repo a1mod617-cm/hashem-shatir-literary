@@ -5,6 +5,18 @@
 <meta name="theme-color" content="#0c0d0f"><meta name="description" content="الموقع الأدبي الرسمي للكاتب والروائي اليمني هاشم خالد شطير. اكتشف المؤلفات، اقرأ الكتب الأربعة كاملة، وتابع تقدمك واقتباسات الكاتب.">
 <meta property="og:type" content="website"><meta property="og:title" content="هاشم خالد شطير | الموقع الأدبي الرسمي"><meta property="og:description" content="للحكايات أرواح لا تغادرنا. اكتشف عوالم الكاتب ومؤلفاته."><meta property="og:image" content="./media/author.jpg">
 <title>هاشم خالد شطير | الموقع الأدبي الرسمي</title><link rel="icon" href="./media/author.jpg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="./style.css"><script src="./app.js" defer></script>
+<script>
+/* Keep public share links tidy when a referring app appends tracking tags. */
+(function () {
+  try {
+    const url = new URL(window.location.href);
+    const tracking = [...url.searchParams.keys()].filter(key => /^utm_/i.test(key));
+    if (!tracking.length) return;
+    tracking.forEach(key => url.searchParams.delete(key));
+    window.history.replaceState(window.history.state, '', url.pathname + url.search + url.hash);
+  } catch (_) {}
+})();
+</script>
 </head>
 <body>
 <div class="reading-progress" id="scroll-progress" aria-hidden="true"></div>

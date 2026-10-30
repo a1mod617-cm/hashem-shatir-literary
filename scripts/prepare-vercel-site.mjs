@@ -21,6 +21,10 @@ for (const name of ['index.html', 'style.css', 'app.js']) {
 // without waiting for the large reader-pages mirror branch.
 await copyFile('public/media/warith-2026.jpg', `${output}/media/warith-2026.jpg`);
 
+// Keep the new share card and Open Graph preview in every Vercel deployment.
+await copyFile('public/media/hashem-share-og.jpg', `${output}/media/hashem-share-og.jpg`);
+await copyFile('public/media/hashem-share-poster.jpg', `${output}/media/hashem-share-poster.jpg`);
+
 // Serve branded discovery assets from the same public Vercel origin.
 await copyFile('public/favicon.svg', `${output}/favicon.svg`);
 await writeFile(`${output}/robots.txt`, `User-agent: *\nAllow: /\nSitemap: https://hashem-shatir-literary-a1mod617-cm.vercel.app/sitemap.xml\n`);

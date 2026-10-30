@@ -211,6 +211,34 @@ function toggleTheme(){
 document.addEventListener('DOMContentLoaded',()=>{
   applyTheme(document.documentElement.dataset.theme);
   $('theme-toggle').addEventListener('click',toggleTheme);
+
+  // Share the clean public URL or copy it on browsers without native sharing.
+  $('share-site')?.addEventListener('click',async()=>{
+    const button=$('share-site');
+    const original=button.innerHTML;
+    const url='https://hashem-shatir-literary-a1mod617-cm.vercel.app/';
+    try{
+      if(navigator.share){
+        await navigator.share({title:'هاشم خالد شطير | الموقع الأدبي الرسمي',text:'اكتشف مؤلفات هاشم خالد شطير واقرأها مباشرة.',url});
+        return;
+      }
+      if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(url);
+      else{
+        const field=document.createElement('textarea');
+        field.value=url;field.style.position='fixed';field.style.opacity='0';
+        document.body.appendChild(field);field.select();
+        if(!document.execCommand('copy'))throw Error('Copy failed');
+        field.remove();
+      }
+      button.textContent='✓ تم نسخ الرابط';
+      setTimeout(()=>{button.innerHTML=original},2000);
+    }catch(error){
+      if(error?.name==='AbortError')return;
+      button.textContent='تعذّر النسخ؛ افتح الرابط من شريط العنوان';
+      setTimeout(()=>{button.innerHTML=original},3500);
+    }
+  });
+
  $('year').textContent=new Date().getFullYear();renderBooks();renderQuotes();renderBio();
  $('book-search').addEventListener('input',event=>{state.query=event.target.value.trim();renderBooks()});
  for(const button of $('filters').querySelectorAll('[data-filter]'))button.addEventListener('click',()=>{

@@ -715,3 +715,14 @@ html[data-theme=light] .tap-arrow{color:#785c3f;background:#f9eeddaf}
  html[data-theme=dark] .nav-links{background:#101113}
 }
 @media(prefers-reduced-motion:reduce){.theme-toggle{transition:none}}
+
+
+/* A restrained literary share station, in both site palettes. */
+.share-panel{width:min(100%,600px);margin:36px auto 0;padding:23px 24px 26px;border-radius:25px;border:1px solid rgba(219,183,135,.24);background:linear-gradient(130deg,#e4bc8420,#12131512);box-shadow:0 15px 48px #0002}
+.share-panel-eyebrow{display:block;margin-bottom:16px;font-size:13px;font-weight:700;color:#d9bc90}
+.share-actions{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap}
+.share-actions .btn{min-height:48px;padding:12px 21px;font-size:13px;white-space:nowrap}
+.share-download{border-color:#b7956a88}
+html[data-theme=light] .share-panel{background:linear-gradient(135deg,#f2e5d2,#fffaf2);border-color:#d4bea0;box-shadow:0 16px 42px #75593c16}
+html[data-theme=light] .share-panel-eyebrow{color:#7d5833}
+@media(max-width:420px){.share-panel{padding:19px 12px 22px}.share-actions{gap:9px}.share-actions .btn{font-size:11px;padding:10px 13px;min-height:44px}}
